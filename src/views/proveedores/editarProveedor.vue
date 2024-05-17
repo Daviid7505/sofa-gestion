@@ -2,8 +2,8 @@
   <header>
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
      </header>
-
-   <div class="d-flex container">
+     <div><h1>Actualizar datos del proveedor</h1></div>
+   <div class="d-flex container" id="form-target">
      <form class="d-flex flex-column" @submit.prevent="enviarFormulario">
        <div class="form-row ">
          <div class="d-flex flex-row">
@@ -127,7 +127,7 @@ padding:10px;
  border-radius:3vh;
  width:60vh;
  padding-bottom:25px;
- margin-top:5%;
+ margin-top:2%;
  box-shadow: 3px 3px 14px 1px rgba(0, 0, 0, 0.1);
 }
 
@@ -163,5 +163,11 @@ padding:10px;
 i{
      padding-right: 6px;
    }
+
+h1{
+  text-align: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin-top: 30px;
+}
 </style>
  

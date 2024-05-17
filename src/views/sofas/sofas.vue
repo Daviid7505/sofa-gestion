@@ -1,6 +1,9 @@
 
 <template>
-
+  <header>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  </header>
+  
   <div class="container">
     <div v-if="mensajeVisible">
       <!-- Mensaje de error -->
@@ -58,7 +61,9 @@
                 <div class="d-flex flex-row">
                   <router-link :to="'/editar-sofa/' + sofa.idSofa"> <editbutton/></router-link>
                   <div class="separador"></div>
-                   <trashbutton/>
+                  <button class="btn btn-danger" @click="eliminarSofa(sofa.idSofa)" ><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
+                      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(10.66667,10.66667)"><path d="M10,2l-1,1h-4c-0.6,0 -1,0.4 -1,1c0,0.6 0.4,1 1,1h2h10h2c0.6,0 1,-0.4 1,-1c0,-0.6 -0.4,-1 -1,-1h-4l-1,-1zM5,7v13c0,1.1 0.9,2 2,2h10c1.1,0 2,-0.9 2,-2v-13zM9,9c0.6,0 1,0.4 1,1v9c0,0.6 -0.4,1 -1,1c-0.6,0 -1,-0.4 -1,-1v-9c0,-0.6 0.4,-1 1,-1zM15,9c0.6,0 1,0.4 1,1v9c0,0.6 -0.4,1 -1,1c-0.6,0 -1,-0.4 -1,-1v-9c0,-0.6 0.4,-1 1,-1z"></path></g></g>
+                      </svg>Eliminar</button>
                 </div>
               </td>
             </tr>
@@ -73,7 +78,6 @@
 
 <script>
 import editbutton from '../../components/editbutton.vue';
-import trashbutton from '../../components/trashbutton.vue';
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 
@@ -81,10 +85,28 @@ import { onMounted } from 'vue';
 import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery } from '@/js/notificacion.js'; 
 
 export default {
-  components: { editbutton, trashbutton},
+  components: { editbutton },
   name:'versofas',
   setup() {
     let sofas = ref([]);
+
+    const eliminarSofa = (idSofa) => {
+      if (confirm('¿Estás seguro de que deseas eliminar este modelo de sofa?')) {
+        fetch(`http://localhost:8088/sofa/eliminar/${idSofa}`, {
+          method: 'DELETE',
+        })
+        .then(() => {
+          // Si la eliminación fue exitosa, actualizamos la lista de clientes
+          getClientes();
+          console.log('Sofá eliminado exitosamente');
+        })
+        .catch(error => {
+          mensaje.value = 'Error al eliminar el sofá.';
+          mostrarMensaje();
+          console.error('Error:', error);
+        });
+      }
+    };
 
     const getSofas= () => {
       fetch('http://localhost:8088/sofa/todos')
@@ -100,7 +122,7 @@ export default {
       verificarMensajeQuery(); // Verifica si se ha enviado la query "mensaje" al cargar la página
     });
 
-    return { sofas, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError };
+    return { sofas, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, eliminarSofa};
   }
 };
 
@@ -211,6 +233,19 @@ align-items:center;
 
 i{
  padding-left:6px;
+}
+
+.btn{
+    border:none;
+    background-color:rgb(224, 10, 10);
+    border:none;
+    border:none;
+    color:white;
+    border-radius:6px;
+    width:100px;
+    display:flex;
+    align-items:center;
+    height:30px;
 }
 
 </style>

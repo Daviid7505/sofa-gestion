@@ -110,7 +110,7 @@ export default {
       }, 5000);
     };
     const eliminarEmpleado = (idEmpleado) => {
-      if (confirm('¿Estás seguro de que deseas eliminar este proveedor?')) {
+      if (confirm('¿Estás seguro de que deseas eliminar este empleado?')) {
         fetch(`http://localhost:8088/empleado/eliminar/${idEmpleado}`, {
           method: 'DELETE',
         })
