@@ -12,7 +12,10 @@ import editarCliente from '@/views/clientes/editarCliente.vue'
 import empleados from '../views/empleados/empleados.vue'
 import sofas from '../views/sofas/sofas.vue'
 import altaSofa from '../views/sofas/altaSofa.vue'
+import editarSofa from '@/views/sofas/editarSofa.vue'
 import pedidos from '../views/pedidos/pedidos.vue'
+import altaEmpleado from '@/views/empleados/altaEmpleado.vue'
+import editarEmpleado from '@/views/empleados/editarEmpleado.vue'
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -73,6 +76,16 @@ const router = createRouter({
         component: empleados
       },
       {
+        path:'/crear-empleado',
+        name: 'vistaAltaEmpleado',
+        component: altaEmpleado
+      },
+      {
+        path:'/editar-empleado/:idEmpleado',
+        name: 'vistaEditarEmpleado',
+        component: editarEmpleado
+      },
+      {
         path: '/versofas',
         name: 'versofas',
         component: sofas
@@ -81,6 +94,11 @@ const router = createRouter({
         path:'/crear-sofa',
         name: 'vistaAltaSofa',
         component: altaSofa
+      },
+      {
+        path:'/editar-sofa/:idSofa',
+        name: 'vistaEditarSofa',
+        component: editarSofa
       },
       {
         path: '/verpedidos',
