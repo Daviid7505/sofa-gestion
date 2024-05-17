@@ -1,82 +1,79 @@
 <template>
+  <div>
+    <header>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </header>
+
     <div>
-      <header>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      </header>
-  
-      <div>
-        <h1>Detalle de pedido</h1>
-      </div>
-      <div class="d-flex container" id="form-target">
-        <form class="d-flex flex-column" @submit.prevent="enviarFormulario">
-          <div class="form-row">
-            <div class="d-flex flex-row">
-              <div>
-                <label for="pedido">Pedido</label>
-                <select class="form-select" id="pedido" v-model="idPedido" required>
-                  <option v-for="pedido in pedidos" :key="pedido.idPedido" :value="pedido.idPedido">{{ pedido.idPedido }}</option>
-                </select>
-              </div>
-              <div class="separador-lateral"></div>
-              <div>
-                <label for="sofa">Sofá</label>
-                <select class="form-select" id="sofa" v-model="idSofa" required>
-                  <option v-for="sofa in sofas" :key="sofa.idSofa" :value="sofa.idSofa">{{ sofa.nombre }}</option>
-                </select>
-              </div>
+      <h1>Detalle de pedido</h1>
+    </div>
+    <div class="d-flex container" id="form-target">
+      <form class="d-flex flex-column" @submit.prevent="enviarFormulario">
+        <div class="form-row">
+          <div class="d-flex flex-row">
+            <div>
+              <label for="pedido">Pedido</label>
+              <select class="form-select" id="pedido" v-model="idPedido" required>
+                <option v-for="pedido in pedidos" :key="pedido.idPedido" :value="pedido.idPedido">{{ pedido.idPedido }}</option>
+              </select>
             </div>
-            <div class="d-flex flex-row mt-3">
-              <div>
-                <label for="cantidad">Cantidad</label>
-                <input type="number" class="form-control" id="cantidad" v-model="cantidad" required>
-              </div>
-              <div class="separador-lateral"></div>
-              <div>
-                <label for="plazas">Plazas</label>
-                <input type="number" class="form-control" id="plazas" v-model="plazas" required>
-              </div>
-            </div>
-            <div class="d-flex flex-row mt-3">
-              <div>
-                <label for="densCojin">Densidad de cojín</label>
-                <input type="number" class="form-control" id="densCojin" v-model="densCojin" required>
-              </div>
-              <div class="separador-lateral"></div>
-              <div>
-                <label for="fecha">Fecha</label>
-                <input type="date" class="form-control" id="fecha" v-model="fecha" required>
-              </div>
-            </div>
-            <div class="d-flex flex-row mt-3">
-              <div>
-                <label for="precio">Precio</label>
-                <select class="form-select" id="pedido" v-model="idPedido" required>
-                  <option v-for="sofa in sofas" :key="sofa.idSofa" :value="sofa.idSofa">{{ sofa.precio }}</option>
-                </select>
-              </div>
-              <div class="separador-lateral"></div>
-            </div>
-            <div class="d-flex flex-row mt-3 botones">
-              <router-link to="/verpedidos" style="text-decoration:none;">
-                <button class="btn btn-secondary" id="cancelar" type="button"><i class="fa-solid fa-times"></i>Cancelar</button>
-              </router-link>
-                <button class="btn btn-success" id="enviar" type="submit"><i class="fa-solid fa-check"></i>Confirmar</button>
+            <div class="separador-lateral"></div>
+            <div>
+              <label for="sofa">Sofá</label>
+              <select class="form-select" id="sofa" v-model="idSofa" required>
+                <option v-for="sofa in sofas" :key="sofa.idSofa" :value="sofa.idSofa">{{ sofa.nombre }}</option>
+              </select>
             </div>
           </div>
-        </form>
-      </div>
+          <div class="d-flex flex-row mt-3">
+            <div>
+              <label for="cantidad">Cantidad</label>
+              <input type="number" class="form-control" id="cantidad" v-model="cantidad" required>
+            </div>
+            <div class="separador-lateral"></div>
+            <div>
+              <label for="plazas">Plazas</label>
+              <input type="number" class="form-control" id="plazas" v-model="plazas" required>
+            </div>
+          </div>
+          <div class="d-flex flex-row mt-3">
+            <div>
+              <label for="densCojin">Densidad de cojín</label>
+              <input type="number" class="form-control" id="densCojin" v-model="densCojin" required>
+            </div>
+            <div class="separador-lateral"></div>
+            <div>
+              <label for="fecha">Fecha</label>
+              <input type="date" class="form-control" id="fecha" v-model="fecha" required>
+            </div>
+          </div>
+          <div class="d-flex flex-row mt-3">
+            <div>
+              <label for="precio">Precio</label>
+              <input type="text" class="form-control" id="precio" v-model="precio" readonly>
+            </div>
+            <div class="separador-lateral"></div>
+          </div>
+          <div class="d-flex flex-row mt-3 botones">
+            <router-link to="/verpedidos" style="text-decoration:none;">
+              <button class="btn btn-secondary" id="cancelar" type="button"><i class="fa-solid fa-times"></i>Cancelar</button>
+            </router-link>
+              <button class="btn btn-success" id="enviar" type="submit"><i class="fa-solid fa-check"></i>Confirmar</button>
+          </div>
+        </div>
+      </form>
     </div>
-  </template>
-  
-  
-  <script>
+  </div>
+</template>
+
+<script>
 export default {
   name: 'vistaAltaDetallePedido',
   data() {
     return {
       pedidos: [],
       sofas: [],
-      cantidad: '',
+      cantidad: 1,  // Inicializado a 1 para evitar multiplicaciones por 0
       plazas: '',
       densCojin: '',
       fecha: '',
@@ -91,6 +88,10 @@ export default {
     if (this.pedidos.length > 0) {
       this.idPedido = this.pedidos[this.pedidos.length - 1].idPedido;
     }
+  },
+  watch: {
+    idSofa: 'actualizarPrecio',
+    cantidad: 'actualizarPrecio'
   },
   methods: {
     async obtenerPedidos() {
@@ -119,6 +120,12 @@ export default {
         console.error('Error:', error);
       }
     },
+    actualizarPrecio() {
+      const sofaSeleccionado = this.sofas.find(sofa => sofa.idSofa === this.idSofa);
+      if (sofaSeleccionado) {
+        this.precio = sofaSeleccionado.precio * this.cantidad;
+      }
+    },
     async enviarFormulario() {
       const formData = {
         idPedido: this.idPedido,
@@ -131,7 +138,8 @@ export default {
       };
 
       try {
-        const response = await fetch('http://localhost:8088/detallepedido/alta', {
+        const response = await fetch('http://localhost:8088/detallepedido/alta', 
+        {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -153,8 +161,6 @@ export default {
   }
 };
 </script>
-
-
   
   <style scoped>
   .container {

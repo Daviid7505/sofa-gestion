@@ -13,7 +13,7 @@
             <div class="d-flex flex-row">
               <div>
                 <label for="nombre">Cliente</label>
-                <select class="form-select" id="nombre" v-model="idCliente" required>
+                <select class="form-select" id="nombre" v-model="vendedor" required>
                   <option v-for="cliente in clientes" :key="cliente.idCliente" :value="cliente.idCliente">{{ cliente.nombre + ' ' + cliente.apellidos }}</option>
                 </select>
               </div>
@@ -26,8 +26,8 @@
             <div class="d-flex flex-row mt-3">
               <div>
                 <label for="vendedor">Vendedor</label>
-                <select class="form-select" id="vendedor" v-model="idVendedor" required>
-                  <option v-for="empleado in empleados" :key="empleado.perfil" :value="empleado.perfil.idPerfil">{{ empleado.nombre + ' ' + empleado.apellidos }}</option>
+                <select class="form-select" id="vendedor" v-model="idEmpleado" required>
+                  <option v-for="empleado in empleados" :key="empleado.idEmpleado" :value="empleado.idEmpleado">{{ empleado.nombre + ' ' + empleado.apellidos }}</option>
                 </select>
               </div>
               <div class="separador-lateral"></div>
@@ -91,7 +91,7 @@
         const formData = {
         idCliente: this.idCliente,
         fecha: this.fecha,
-        vendedor: this.vendedor
+        vendedor: this.idEmpleado
       };
       try {
         const response = await fetch('http://localhost:8088/pedido/alta', {
