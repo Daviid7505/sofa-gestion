@@ -24,20 +24,21 @@
              <input type="number" class="form-control" v-model="proveedor.descripcion" placeholder="Cantidad" required>
            </div>  
          </div>
-   <div class="d-flex flex-row">
-       <div class="botones">
-         <router-link to="/verproveedores" style="text-decoration:none; color:white;"> <button class="btn" id="cancelar"><i class="fa-solid fa-xmark"></i>Cancelar</button></router-link>
-       <button class="btn" id="enviar" type="submit"><i class="fa-solid fa-check"></i>Confirmar</button>
-        </div>
-   </div>
- </div>
+        <div class="d-flex flex-row mt-3 botones">
+          <router-link to="/verproveedores" style="text-decoration: none;"> <cancelbutton/></router-link>
+          <confirmbutton @click="enviarFormulario"></confirmbutton>
+         </div>
+      </div>
      </form>
    </div>
  </template>
  
  <script>
  import router from '@/router';
+ import confirmbutton from '@/components/confirmbutton.vue'
+import cancelbutton from '@/components/cancelbutton.vue'
  export default {
+  components: { confirmbutton, cancelbutton },
    name: 'vistaEditarProveedor',
    data() {
      return {

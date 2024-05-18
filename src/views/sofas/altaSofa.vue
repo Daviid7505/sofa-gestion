@@ -36,10 +36,8 @@
            </div>
          </div>
          <div class="d-flex flex-row mt-3 botones">
-           <router-link to="/versofas" style="text-decoration:none;">
-             <button class="btn btn-secondary" id="cancelar"><i class="fa-solid fa-xmark"></i>Cancelar</button>
-           </router-link>
-           <button class="btn btn-success" id="enviar" type="submit"><i class="fa-solid fa-check"></i>Confirmar</button>
+          <router-link to="/versofas" style="text-decoration: none;"> <cancelbutton/></router-link>
+          <confirmbutton @click="enviarFormulario"></confirmbutton>
          </div>
        </div>
      </form>
@@ -47,7 +45,10 @@
  </template>
  
  <script>
+ import confirmbutton from '@/components/confirmbutton.vue'
+ import cancelbutton from '@/components/cancelbutton.vue'
  export default {
+  components: { confirmbutton, cancelbutton },
    name: 'vistaAltaSofa',
    data() {
      return {
@@ -69,24 +70,27 @@
        };
  
        try {
-         const response = await fetch('http://localhost:8088/sofa/alta', {
-           method: 'POST',
-           headers: {
-             'Content-Type': 'application/json'
-           },
-           body: JSON.stringify(formData)
-         });
- 
-         if (response.ok) {
-           alert('Sofá agregado exitosamente');
-           this.$router.push('/versofas');
-         } else {
-           alert('Error al agregar el sofá');
-         }
-       } catch (error) {
-         console.error('Error:', error);
-         alert('Error de red al agregar el sofá');
-       }
+        // Realizar la llamada POST a tu API
+        const response = await fetch('http://localhost:8088/sofa/alta', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        // Verificar si la llamada fue exitosa
+        if (response.ok) {
+          // Aquí puedes manejar la respuesta si es necesario
+         this.$router.push({path:'/verMateriales', query: { mensaje: 'Sofá creado exitosamente', tipo:'satisfactorio'}})
+        } else {
+          // Si la llamada no fue exitosa, mostrar el mensaje de error
+          this.$router.push({path:'/versofas', query: {mensaje: 'Error al crear el sofá', tipo: 'error'}})
+        }
+      } catch (error) {
+        // Si hubo un error con la llamada, mostrarlo en la consola
+        console.error('Error:', error);
+      }
      }
    }
  };

@@ -5,7 +5,7 @@
   
     <button class="addbutton" type="submit">
     <i class='bx bxs-plus-circle ' ></i>
-    <span>Alta material</span>
+    <span>Nuevo</span>
   </button>
  
  
@@ -18,7 +18,7 @@
  color:white;
  background-color:rgb(15, 153, 2);
  border-radius:6px;
- width:150px;
+ width:100px;
  display:flex;
  align-items:center;
  

@@ -25,18 +25,19 @@
          </div>
        </div>
        <div class="d-flex flex-row mt-3 botones">
-         <router-link to="/verproveedores" style="text-decoration:none;">
-           <button class="btn btn-secondary" id="cancelar"><i class="fa-solid fa-xmark"></i>Cancelar</button>
-         </router-link>
-         <button class="btn btn-success" id="enviar" type="submit"><i class="fa-solid fa-check"></i>Confirmar</button>
-       </div>
+          <router-link to="/verproveedores" style="text-decoration: none;"> <cancelbutton/></router-link>
+          <confirmbutton @click="enviarFormulario"></confirmbutton>
+         </div>
      </div>
    </form>
  </div>
 </template>
 
 <script>
+import confirmbutton from '@/components/confirmbutton.vue'
+import cancelbutton from '@/components/cancelbutton.vue'
 export default {
+ components: { confirmbutton, cancelbutton },
  name: 'vistaAltaProveedores',
  data() {
    return {

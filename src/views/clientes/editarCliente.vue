@@ -21,12 +21,12 @@
 
         <div class="d-flex flex-row">
           <div>
-            <label for="validationDefault02">Dirección</label>
+            <label for="validationDefault01">Dirección</label>
             <input type="text" class="form-control" v-model="cliente.direccion" placeholder="Dirección" required>
           </div>
           <div class="separador-lateral"></div>
           <div>
-            <label class="ref-prov">Email</label>
+            <label for="validationDefault01">Dirección</label>
             <input type="text" class="form-control" v-model="cliente.email" placeholder="Email" required>
           </div>
   </div>
@@ -34,16 +34,16 @@
   </div>
   <div class="d-flex flex-row">
       <div>
-          <label for="validationDefault02">Teléfono</label>
-          <input type="number" class="form-control"  aria-describedby="inputGroupPrepend2" v-model="cliente.telefono" required>
+          <label for="validationDefault01">Teléfono</label>
+          <input type="text" class="form-control"  aria-describedby="inputGroupPrepend2" v-model="cliente.telefono" required>
       </div>
   </div>
   <div class="d-flex flex-row">
    
-      <div class="botones">
-        <router-link to="/verclientes" style="text-decoration:none; color:white;"> <button class="btn" id="cancelar"><i class="fa-solid fa-xmark"></i>Cancelar</button></router-link>
-      <button class="btn" id="enviar" type="submit"><i class="fa-solid fa-check"></i>Confirmar</button>
-       </div>
+    <div class="d-flex flex-row mt-3 botones">
+          <router-link to="/verclientes" style="text-decoration: none;"> <cancelbutton/></router-link>
+          <confirmbutton @click="enviarFormulario"></confirmbutton>
+         </div>
   </div>
 </div>
     </form>
@@ -52,7 +52,10 @@
 
 <script>
 import router from '@/router';
+import confirmbutton from '@/components/confirmbutton.vue'
+import cancelbutton from '@/components/cancelbutton.vue'
 export default {
+  components: { confirmbutton, cancelbutton },
   name: 'vistaEditarCliente',
   data() {
     return {

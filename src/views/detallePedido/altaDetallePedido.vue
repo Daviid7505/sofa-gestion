@@ -72,12 +72,10 @@
             </div>
             <div class="separador-lateral"></div>
           </div>
-          <div class="d-flex flex-row mt-3 botones">
-            <router-link to="/verpedidos" style="text-decoration:none;">
-              <button class="btn btn-secondary" id="cancelar" type="button"><i class="fa-solid fa-times"></i>Cancelar</button>
-            </router-link>
-              <button class="btn btn-success" id="enviar" type="submit"><i class="fa-solid fa-check"></i>Confirmar</button>
-          </div>
+          < <div class="d-flex flex-row mt-3 botones">
+          <router-link to="/crear-detallepedido'" style="text-decoration: none;"> <cancelbutton/></router-link>
+          <confirmbutton @click="enviarFormulario"></confirmbutton>
+         </div>
         </div>
       </form>
     </div>
@@ -86,14 +84,15 @@
 
 <script>
 
-import { ref } from 'vue';
 import { onMounted } from 'vue';
-
+import confirmbutton from '@/components/confirmbutton.vue'
+import cancelbutton from '@/components/cancelbutton.vue'
 // Importa la función verificarMensajeQuery desde el archivo vistaHelper.js
 import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery } from '@/js/notificacion.js'; 
 
 
 export default {
+  components: { confirmbutton, cancelbutton },
   name: 'vistaAltaDetallePedido',
   data() {
     return {

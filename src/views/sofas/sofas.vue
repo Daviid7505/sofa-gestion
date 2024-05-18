@@ -1,57 +1,56 @@
 
 <template>
-  <header>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  </header>
-  
   <div class="container">
     <div v-if="mensajeVisible">
       <!-- Mensaje de error -->
       <div v-if="mensajeError" class="notification">
-          <div class="intermedio">
-            <div class="icononotificacionerror"><svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 24 24" style=" width:42%; fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M16.707 2.293A.996.996 0 0 0 16 2H8a.996.996 0 0 0-.707.293l-5 5A.996.996 0 0 0 2 8v8c0 .266.105.52.293.707l5 5A.996.996 0 0 0 8 22h8c.266 0 .52-.105.707-.293l5-5A.996.996 0 0 0 22 16V8a.996.996 0 0 0-.293-.707l-5-5zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg></div>
-            <div class="alerta error">{{ mensaje }}</div>
+        <div class="intermedio">
+          <div class="icononotificacionerror">
+            <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 24 24" style="width:42%; fill: rgba(255, 255, 255, 1);">
+              <path d="M16.707 2.293A.996.996 0 0 0 16 2H8a.996.996 0 0 0-.707.293l-5 5A.996.996 0 0 0 2 8v8c0 .266.105.52.293.707l5 5A.996.996 0 0 0 8 22h8c.266 0 .52-.105.707-.293l5-5A.996.996 0 0 0 22 16V8a.996.996 0 0 0-.293-.707l-5-5zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
           </div>
+          <div class="alerta error">{{ mensaje }}</div>
         </div>
+      </div>
     
-        <!-- Mensaje satisfactorio -->
-        <div v-if="mensajeSatisfactorio" class="notification">
-          <div class="intermedio">
-            <div class="icononotificacion"><svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 25 25" style=" width:42%;fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M11.488 21.754c.294.157.663.156.957-.001 8.012-4.304 8.581-12.713 8.574-15.104a.988.988 0 0 0-.596-.903l-8.05-3.566a1.005 1.005 0 0 0-.813.001L3.566 5.747a.99.99 0 0 0-.592.892c-.034 2.379.445 10.806 8.514 15.115zM8.674 10.293l2.293 2.293 4.293-4.293 1.414 1.414-5.707 5.707-3.707-3.707 1.414-1.414z"></path></svg></div>
-            <div class="alerta">{{ mensaje }}</div>
+      <!-- Mensaje satisfactorio -->
+      <div v-if="mensajeSatisfactorio" class="notification">
+        <div class="intermedio">
+          <div class="icononotificacion">
+            <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 25 25" style="width:42%; fill: rgba(255, 255, 255, 1);">
+              <path d="M11.488 21.754c.294.157.663.156.957-.001 8.012-4.304 8.581-12.713 8.574-15.104a.988.988 0 0 0-.596-.903l-8.05-3.566a1.005 1.005 0 0 0-.813.001L3.566 5.747a.99.99 0 0 0-.592.892c-.034 2.379.445 10.806 8.514 15.115zM8.674 10.293l2.293 2.293 4.293-4.293 1.414 1.414-5.707 5.707-3.707-3.707 1.414-1.414z"/>
+            </svg>
           </div>
+          <div class="alerta">{{ mensaje }}</div>
         </div>
+      </div>
     </div>
- 
+    
     <div class="container-title">
       <div class="title"> 
         <h1 class="text-left">Lista de sofás</h1>
       </div>
-      <div class="container-alta">
-      <router-link to="/crear-sofa" style="text-decoration:none;">
-          <button class="agregar" type="button">
-          <i class='bx bxs-plus-circle'></i>
-          <span>Nuevo sofá</span>
-          </button>
-      </router-link>
+      <div class="container-alta"> 
+        <router-link to="/crear-sofa" style="text-decoration: none;"><addbutton/></router-link>
       </div>
-  </div>
+    </div>
 
     <div class="row">
       <div class="col-md-12">
         <table class="table table-hover table-responsive">
           <thead class="center">
             <tr>
-              <th  scope="col">Nombre</th>
-              <th  scope="col">Descripción</th>
-              <th  scope="col">Patas</th>
-              <th  scope="col">Medida de cojín</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Patas</th>
+              <th scope="col">Medida de cojín</th>
               <th scope="col">Precio</th>
-              <th scope="col"> </th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="sofa in sofas" :key="sofas.idSofa">
+            <tr v-for="sofa in sofas" :key="sofa.idSofa">
               <td>{{ sofa.nombre }}</td>
               <td>{{ sofa.descripcion }}</td>
               <td>{{ sofa.patas }}</td>
@@ -59,25 +58,23 @@
               <td>{{ sofa.precio }}</td>
               <td class="botones">
                 <div class="d-flex flex-row">
-                  <router-link :to="'/editar-sofa/' + sofa.idSofa"> <editbutton/></router-link>
+                  <router-link :to="'/editar-sofa/' + sofa.idSofa"><editbutton/></router-link>
                   <div class="separador"></div>
-                  <button class="btn btn-danger" @click="eliminarSofa(sofa.idSofa)" ><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
-                      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(10.66667,10.66667)"><path d="M10,2l-1,1h-4c-0.6,0 -1,0.4 -1,1c0,0.6 0.4,1 1,1h2h10h2c0.6,0 1,-0.4 1,-1c0,-0.6 -0.4,-1 -1,-1h-4l-1,-1zM5,7v13c0,1.1 0.9,2 2,2h10c1.1,0 2,-0.9 2,-2v-13zM9,9c0.6,0 1,0.4 1,1v9c0,0.6 -0.4,1 -1,1c-0.6,0 -1,-0.4 -1,-1v-9c0,-0.6 0.4,-1 1,-1zM15,9c0.6,0 1,0.4 1,1v9c0,0.6 -0.4,1 -1,1c-0.6,0 -1,-0.4 -1,-1v-9c0,-0.6 0.4,-1 1,-1z"></path></g></g>
-                      </svg>Eliminar</button>
+                  <trashbutton @click="eliminarSofa(sofa.idSofa)"></trashbutton>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
-      
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
+import addbutton from '@/components/addbutton.vue';
 import editbutton from '../../components/editbutton.vue';
+import trashbutton from '@/components/trashbutton.vue';
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 
@@ -85,7 +82,7 @@ import { onMounted } from 'vue';
 import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery } from '@/js/notificacion.js'; 
 
 export default {
-  components: { editbutton },
+  components: { addbutton, editbutton, trashbutton },
   name:'versofas',
   setup() {
     let sofas = ref([]);
@@ -233,19 +230,6 @@ align-items:center;
 
 i{
  padding-left:6px;
-}
-
-.btn{
-    border:none;
-    background-color:rgb(224, 10, 10);
-    border:none;
-    border:none;
-    color:white;
-    border-radius:6px;
-    width:100px;
-    display:flex;
-    align-items:center;
-    height:30px;
 }
 
 </style>

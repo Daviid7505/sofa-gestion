@@ -1,8 +1,4 @@
 <template>
-  <header>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      </header>
-
     <div><h1>Actualizar datos del modelo de sofá</h1></div>
     <div class="d-flex container" id="form-target">
       <form class="d-flex flex-column" @submit.prevent="enviarFormulario">
@@ -22,11 +18,11 @@
           <div class="d-flex flex-row">
             <div>
               <label for="validationDefault02">Patas</label>
-              <input type="text" class="form-control" v-model="sofa.patas" placeholder="Número de patas" required>
+              <input type="number" class="form-control" v-model="sofa.patas" placeholder="Número de patas" required>
             </div>
             <div class="separador-lateral"></div>
             <div>
-              <label class="ref-prov">Medida de cojín</label>
+              <label for="validationDefault01">Medida de cojín</label>
               <input type="text" class="form-control" v-model="sofa.medidaCojin" placeholder="Medida cojín" required>
             </div>
     </div>
@@ -40,9 +36,9 @@
     </div>
     <div class="d-flex flex-row">
      
-        <div class="botones">
-          <router-link to="/versofas" style="text-decoration:none; color:white;"> <button class="btn" id="cancelar"><i class="fa-solid fa-xmark"></i>Cancelar</button></router-link>
-        <button class="btn" id="enviar" type="submit"><i class="fa-solid fa-check"></i>Confirmar</button>
+      <div class="d-flex flex-row mt-3 botones">
+          <router-link to="/versofas" style="text-decoration: none;"> <cancelbutton/></router-link>
+          <confirmbutton @click="enviarFormulario"></confirmbutton>
          </div>
     </div>
   </div>
@@ -50,67 +46,70 @@
     </div>
   </template>
  
-  <script>
-  import router from '@/router';
-  export default {
-    name: 'vistaEditarSofa',
-    data() {
-      return {
-        sofa: {
-          idSofa: '',
-          nombre: '',
-          descripcion: '',
-          patas: '',
-          medidaCojin: '',
-          precio: ''
-        },
-      };
-    },
-    created() {
-      this.sofa.idSofa = this.$route.params.idSofa;
-      this.obtenerSofa();
-    },
-    methods: {
-      async obtenerSofa() {
-        try {
-          const response = await fetch(`http://localhost:8088/sofa/uno/${this.sofa.idSofa}`);
-          if (response.ok) {
-            const data = await response.json();
-            this.sofa = data;
-          } else {
-            console.error('Error al obtener el cliente');
-          }
-        } catch (error) {
-          console.error('Error:', error);
-        }
+ <script>
+import router from '@/router';
+import confirmbutton from '@/components/confirmbutton.vue'
+import cancelbutton from '@/components/cancelbutton.vue'
+export default {
+  components: { confirmbutton, cancelbutton },
+  name: 'vistaEditarSofa',
+  data() {
+    return {
+      sofa: {
+        idSofa: '',
+        nombre: '',
+        descripcion: '',
+        patas: '',
+        medidaCojin: '',
+        precio: ''
       },
-      async enviarFormulario() {
-            const formData = {
-            idSofa: this.sofa.idSofa,
-            nombre: this.sofa.nombre,
-            descripcion: this.sofa.descripcion,
-            patas: this.sofa.patas,
-            medidaCojin: this.sofa.medidaCojin,
-            precio: this.sofa.precio
-          };
-  
-          const response = await fetch('http://localhost:8088/sofa/modificar', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-          });
-          if (response.ok) {
-            console.log('Sofá editado exitosamente');
-            router.push({ path: '/versofas', query: { mensaje: 'Sofá editado',  tipo: 'satisfactorio' } });
-          } else {
-            console.error('Error al editar el sofá');
-          }
+    };
+  },
+  created() {
+    this.sofa.idSofa = this.$route.params.idSofa;
+    this.obtenerSofa();
+  },
+  methods: {
+    async obtenerSofa() {
+      try {
+        const response = await fetch(`http://localhost:8088/sofa/uno/${this.sofa.idSofa}`);
+        if (response.ok) {
+          const data = await response.json();
+          this.sofa = data;
+        } else {
+          console.error('Error al obtener el sofá');
+        }
+      } catch (error) {
+        console.error('Error:', error);
       }
+    },
+    async enviarFormulario() {
+          const formData = {
+          idSofa: this.sofa.idSofa,
+          nombre: this.idSofa.nombre,
+          descripcion: this.sofa.descripcion,
+          patas: this.sofa.patas,
+          medidaCojin: this.sofa.medidaCojin,
+          precio: this.sofa.precio
+        };
+
+        const response = await fetch('http://localhost:8088/sofa/modificar', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+        if (response.ok) {
+          console.log('Sofá editado exitosamente');
+          router.push({ path: '/versofas', query: { mensaje: 'Sofá editado',  tipo: 'satisfactorio' } });
+        } else {
+          console.error('Error al editar el sofá');
+        }
     }
-  };
-  </script>
+  }
+};
+</script>
   
    <style scoped>
    .container{

@@ -21,7 +21,7 @@
   
           <div class="d-flex flex-row col-md-12">
             <div>
-              <label for="validationDefault02">Password</label>
+              <label for="validationDefault01">Password</label>
               <input type="text" class="form-control" v-model="empleado.password" required>
             </div>
             <div class="separador-lateral"></div>
@@ -39,12 +39,12 @@
     </div>
     <div class="d-flex flex-row col-md-12">
         <div>
-            <label for="validationDefaul01">Fecha de Ingreso</label>
+            <label for="validationDefaul02">Fecha de Ingreso</label>
             <input type="date" class="form-control" v-model="empleado.fechaIngreso" placeholder="yyyy-MM-dd" required>
         </div>
         <div class="separador-lateral"></div>
         <div>
-            <label for="validationDefault02">Rol</label>
+          <label class="ref-prov">Rol</label>
             <select class="form-select" v-model="nombrePerfil" required>
                 <option v-for="perfil in perfiles" :key="perfil.id" :value="perfil.rol" :selected="perfil.rol === empleado.perfil.rol">{{ perfil.rol }}</option>
               </select>
@@ -62,7 +62,7 @@
         </div>
         <div class="separador-lateral"></div>
         <div>
-              <label for="validationDefault01">Estado</label>
+          <label class="ref-prov">Estado</label>
               <select class="form-select" v-model="empleado.estado" required>
             <option v-for="estado in estados" :key="estados" :value="estado" :selected="estado === estado">{{ estado }}</option>
              
@@ -74,16 +74,16 @@
     </div>
     <div class="d-flex flex-row col-md-12">
             <div>
-              <label for="validationDefault01">Salario</label>
+              <label for="validationDefault02">Salario</label>
               <input type="number" class="form-control" v-model="empleado.salario" placeholder="Salario" required>
             </div>
           </div>
   
     <div class="d-flex flex-row">
      
-        <div class="botones">
-          <router-link to="/verempleados" style="text-decoration:none; color:white;"> <button class="btn" id="cancelar"><i class="fa-solid fa-xmark"></i>Cancelar</button></router-link>
-        <button class="btn" id="enviar" type="submit"><i class="fa-solid fa-check"></i>Confirmar</button>
+      <div class="d-flex flex-row mt-3 botones">
+          <router-link to="/verempleados" style="text-decoration: none;"> <cancelbutton/></router-link>
+          <confirmbutton @click="enviarFormulario"></confirmbutton>
          </div>
     </div>
   </div>
@@ -93,7 +93,10 @@
 
   <script>
   import router from '@/router';
+  import confirmbutton from '@/components/confirmbutton.vue'
+  import cancelbutton from '@/components/cancelbutton.vue'
   export default {
+    components: { confirmbutton, cancelbutton },
     name: 'vistaEditarEmpleado',
     data() {
       return {

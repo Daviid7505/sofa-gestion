@@ -30,14 +30,9 @@
       <div class="title">
         <h1 class="text-left">Lista de pedidos</h1>
       </div>
-      <div class="container-alta">
-        <router-link to="/crear-pedido" style="text-decoration:none;">
-          <button class="agregar" type="button">
-            <i class='bx bxs-plus-circle'></i>
-            <span>Nuevo pedido</span>
-          </button>
-        </router-link>
-      </div>
+      <div class="container-alta"> 
+          <router-link to="/crear-pedido" style="text-decoration:none;"> <addbutton/></router-link>
+        </div>
     </div>
 
     <div class="row">
@@ -80,13 +75,14 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { format } from 'date-fns';
+import addbutton from '@/components/addbutton.vue'
 import editbutton from '../../components/editbutton.vue';
 import trashbutton from '../../components/trashbutton.vue';
 import detailbutton from '../../components/detailbutton.vue';
 import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery } from '@/js/notificacion.js';
 
 export default {
-  components: { editbutton, detailbutton, trashbutton },
+  components: { addbutton, editbutton, detailbutton, trashbutton },
   name: 'verpedidos',
   setup() {
     const pedidos = ref([]);
