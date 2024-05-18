@@ -1,24 +1,17 @@
 <template>
-    <div class="container">
-      <div v-if="mensajeVisible">
-        <!-- Mensaje de error -->
-        <div v-if="mensajeError" class="notification">
-          <div class="intermedio">
-            <div class="icononotificacionerror">
-              <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 24 24" style="width:42%; fill: rgba(255, 255, 255, 1);"><path d="M16.707 2.293A.996.996 0 0 0 16 2H8a.996.996 0 0 0-.707.293l-5 5A.996.996 0 0 0 2 8v8c0 .266.105.52.293.707l5 5A.996.996 0 0 0 8 22h8c.266 0 .52-.105.707-.293l5-5A.996.996 0 0 0 22 16V8a.996.996 0 0 0-.293-.707l-5-5zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-            </div>
-            <div class="alerta error">{{ mensaje }}</div>
+  <header>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  </header>
+
+  <div class="container">
+    <div v-if="mensajeVisible">
+      <!-- Mensaje de error -->
+      <div v-if="mensajeError" class="notification">
+        <div class="intermedio">
+          <div class="icononotificacionerror">
+            <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 24 24" style="width:42%; fill: rgba(255, 255, 255, 1);"><path d="M16.707 2.293A.996.996 0 0 0 16 2H8a.996.996 0 0 0-.707.293l-5 5A.996.996 0 0 0 2 8v8c0 .266.105.52.293.707l5 5A.996.996 0 0 0 8 22h8c.266 0 .52-.105.707-.293l5-5A.996.996 0 0 0 22 16V8a.996.996 0 0 0-.293-.707l-5-5zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
           </div>
-        </div>
-  
-        <!-- Mensaje satisfactorio -->
-        <div v-if="mensajeSatisfactorio" class="notification">
-          <div class="intermedio">
-            <div class="icononotificacion">
-              <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 25 25" style="width:42%;fill: rgba(255, 255, 255, 1);"><path d="M11.488 21.754c.294.157.663.156.957-.001 8.012-4.304 8.581-12.713 8.574-15.104a.988.988 0 0 0-.596-.903l-8.05-3.566a1.005 1.005 0 0 0-.813.001L3.566 5.747a.99.99 0 0 0-.592.892c-.034 2.379.445 10.806 8.514 15.115zM8.674 10.293l2.293 2.293 4.293-4.293 1.414 1.414-5.707 5.707-3.707-3.707 1.414-1.414z"/></svg>
-            </div>
-            <div class="alerta">{{ mensaje }}</div>
-          </div>
+          <div class="alerta error">{{ mensaje }}</div>
         </div>
       </div>
   
@@ -69,6 +62,7 @@
         </div>
       </div>
     </div>
+  </div>  
   </template>
   
   <script>
@@ -195,6 +189,19 @@
     align-items: center;
   }
   
+  .btn{
+    border:none;
+    background-color:rgb(224, 10, 10);
+    border:none;
+    border:none;
+    color:white;
+    border-radius:6px;
+    width:100px;
+    display:flex;
+    align-items:center;
+    height:30px;
+  }
+
   .agregar span {
     padding-left: 10px;
   }
