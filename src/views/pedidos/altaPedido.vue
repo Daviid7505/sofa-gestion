@@ -103,10 +103,10 @@
         });
 
         if (response.ok) {
-          alert('Pedido agregado exitosamente');
-          this.$router.push('/crear-detallePedido');
+          
+          this.$router.push({path:'/crear-detallePedido', query: { mensaje: 'Pedido agregado exitosamente', tipo:'satisfactorio'}})
         } else {
-          alert('Error al agregar el pedido');
+          this.$router.push({path:'/crear-Pedido', query: { mensaje: 'Error al crear pedido', tipo:'error'}})
         }
       } catch (error) {
         console.error('Error:', error);

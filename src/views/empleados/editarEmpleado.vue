@@ -205,10 +205,9 @@
             body: JSON.stringify(formData)
           });
           if (response.ok) {
-            console.log('Empleado editado exitosamente');
-            router.push({ path: '/verempleados', query: { mensaje: 'Empleado editado',  tipo: 'satisfactorio' } });
+            this.$router.push({ path: '/verempleados', query: { mensaje: 'Empleado editado',  tipo: 'satisfactorio' } });
           } else {
-            console.error('Error al actualizar datos del empleado');
+            this.$router.push({path:'/verempleados', query: { mensaje: 'Error al actualizar empleado', tipo:'error'}})
           }
         } catch (error) {
           console.error('Error:', error);

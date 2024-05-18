@@ -216,10 +216,10 @@ name:'vistaAltaMateriales',
         // Verificar si la llamada fue exitosa
         if (response.ok) {
           // Aquí puedes manejar la respuesta si es necesario
-          console.log('Material creado exitosamente');
+         this.$router.push({path:'/verMateriales', query: { mensaje: 'Material creado exitosamente', tipo:'satisfactorio'}})
         } else {
           // Si la llamada no fue exitosa, mostrar el mensaje de error
-          console.error('Error al crear el material');
+          this.$router.push({path:'/verMateriales', query: {mensaje: 'Error al crear el material', tipo: 'error'}})
         }
       } catch (error) {
         // Si hubo un error con la llamada, mostrarlo en la consola

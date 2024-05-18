@@ -108,7 +108,7 @@ export default {
 </script>
 
 <style scoped>
-
+@import url('../../assets/notificacion.css');
 .botones {
   width: 200px;
 }
@@ -148,54 +148,6 @@ text-align:center;
 table td{
   text-align:center;
 }
-
-
-.notification{
-  display:flex;
-  padding-top:10px;
-  width: 80vw;
-  height:5.5vh;
-  justify-content:right;
-}
-
-
-.intermedio{
-  display:flex;
-  background-color:rgba(240, 240, 240, 0.899);
-  box-shadow: 1.5px 1.5px 5px 1.5px rgba(0, 0, 0, 0.15);
-  border-radius:8px;
-  width:22%;
-  justify-content:space-between;
-}
-
-.alerta{
-  display:flex;
-  height:100%;
-  width:100%;
-  align-items:center;
-  justify-content:center;
-
-}
-
-.icononotificacion{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:rgba(38, 182, 38, 0.887);
-  
-  border-radius:8px;
-  width:25%;
-}
-
-.icononotificacionerror{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:rgba(210, 21, 21, 0.984);
-  border-radius:8px;
-  width:25%;
-}
-
 
 
 </style>

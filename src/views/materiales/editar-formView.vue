@@ -229,10 +229,9 @@ export default {
           body: JSON.stringify(formData)
         });
         if (response.ok) {
-          console.log('Material editado exitosamente');
           router.push({ path: '/verMateriales', query: { mensaje: 'Material editado',  tipo: 'satisfactorio' } });
         } else {
-          console.error('Error al editar el material');
+          router.push({ path: '/verMateriales', query: { mensaje: 'Error al editar material',  tipo: 'error' } });
         }
       } catch (error) {
         console.error('Error:', error);

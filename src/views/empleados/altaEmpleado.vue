@@ -140,14 +140,16 @@ export default {
         });
 
         if (response.ok) {
-          alert('Empleado agregado exitosamente');
+          
           this.$router.push('/verempleados');
+          this.$router.push({path:'/verempleados', query: { mensaje: 'Empleado agregado exitosamente', tipo:'satisfactorio'}})
         } else {
-          alert('Error al agregar el empleado');
+          
+          this.$router.push({path:'/verempleados', query: { mensaje: 'Error al agregar empleado', tipo:'error'}})
         }
       } catch (error) {
         console.error('Error:', error);
-        alert('Error de red al agregar el empleado');
+       
       }
     }
   }
