@@ -110,8 +110,8 @@
           this.$router.push({path:'/crear-Pedido', query: { mensaje: 'Error al crear pedido', tipo:'error'}})
         }
       } catch (error) {
+        this.$router.push({path:'/crear-Pedido', query: { mensaje: 'Error al crear pedido', tipo:'error'}})
         console.error('Error:', error);
-        alert('Error de red al agregar el pedido');
       }
     }
     }

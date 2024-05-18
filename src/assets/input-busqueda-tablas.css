@@ -1,0 +1,18 @@
+.container-busqueda{
+    display:flex;
+    justify-content:left;
+    width:50%;
+    height:48px;
+    align-items:center;
+  }
+
+  input{
+    border-radius: 6px;
+    border-color: rgb(22, 62, 108);
+  }
+  .buscar{
+    border-radius: 6px;
+    background-color:rgb(22, 62, 108);
+    margin-left: 5px;
+    color: rgb(255,255,255)
+  }

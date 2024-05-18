@@ -1,0 +1,41 @@
+
+.botones {
+    width: 200px;
+  }
+  
+  .container-title{
+    display:flex;
+    margin-top:20px;
+    background-color:rgb(22, 62, 108);
+    border-radius:8px;
+    justify-content:space-between;
+    height:50px;
+    
+  }
+  .container-alta{
+    display:flex;
+    justify-content:center;
+    width:25%;
+    height:100%;
+    align-items:center;
+    
+  }
+  
+  .title{
+   
+    color:white;
+    padding-left:40px;
+  }
+  
+  .separador{
+    width:22px;
+  }
+  
+  table th{
+  text-align:center;
+  }
+  
+  table td{
+    text-align:center;
+  }
+  

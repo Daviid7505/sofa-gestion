@@ -43,6 +43,10 @@
 </script>
 
 <style scoped>
+@import url('assets/notificacion.css');
+@import url('assets/tablas.css');
+@import url('assets/input-busqueda-tablas.css');
+
 .navbar{
 	background-color:rgb(30, 36, 80);
 }

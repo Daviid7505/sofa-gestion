@@ -14,15 +14,18 @@ export function mostrarMensaje(msg, tipo) {
   mensajeError.value = tipo === 'error';
   mensajeSatisfactorio.value = tipo === 'satisfactorio';
 
+  ocultarMensajeConRetraso(); //siempre que mostremos un mensaje vamos a ejecutar el temporizador
+}
+export function ocultarMensajeConRetraso(){
     // Si hay un temporizador activo, cáncelalo antes de configurar uno nuevo
     if (timeoutId) {
-        clearTimeout(timeoutId);
-    }
+      clearTimeout(timeoutId);
+  }
 
-  // Configura un nuevo temporizador para ocultar el mensaje después de 3 segundos
-  timeoutId = setTimeout(() => {
-    mensajeVisible.value = false;
-  }, 3000);
+    // Configura un nuevo temporizador para ocultar el mensaje después de 3 segundos
+     timeoutId = setTimeout(() => {
+      mensajeVisible.value = false;
+    }, 3000);
 }
 
 
@@ -37,4 +40,14 @@ export function verificarMensajeQuery() {
     mostrarMensaje(mensajeQuery, tipoMensaje);
   }
 
+}
+
+//este método lo llamaremos antes del verificarMensaje para que se limpie y cuando cambiemos a otra vista
+//y volvamos a la que nos había mostrado el mensaje no se vuelva a mostrar porque no se hayan limpiado
+//las variables que lo contienen
+export function limpiarMensaje(){
+  mensaje.value = '';
+  mensajeVisible.value = false;
+  mensajeError.value = false;
+  mensajeSatisfactorio.value = false;
 }

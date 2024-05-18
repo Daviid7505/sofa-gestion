@@ -157,7 +157,7 @@ name:'vistaAltaMateriales',
           this.$router.push({path:'/verMateriales', query: {mensaje: 'Error al crear el material', tipo: 'error'}})
         }
       } catch (error) {
-        // Si hubo un error con la llamada, mostrarlo en la consola
+        this.$router.push({path:'/verMateriales', query:{ mensaje:'Error al crear el material', tipo:'error'}})
         console.error('Error:', error);
       }
     }

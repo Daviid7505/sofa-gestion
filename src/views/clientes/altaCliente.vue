@@ -79,14 +79,15 @@
          });
  
          if (response.ok) {
-           alert('Cliente agregado exitosamente');
-           this.$router.push('/verclientes');
+           this.$router.push({path:'/verclientes', query:{mensaje:'Cliente agregado correctamente', tipo:'satisfactorio'}});
          } else {
-           alert('Error al agregar el cliente');
+          this.$router.push({path: '/verclientes', mensaje:'Error al crear el cliente', tipo:'error'});
+          console.error('Error:', error);
          }
        } catch (error) {
-         console.error('Error:', error);
-         alert('Error de red al agregar el cliente');
+        this.$router.push({path: '/verclientes', query:{ mensaje:'Error al crear el cliente', tipo:'error'}});
+        console.error('Error:', error);
+         
        }
      }
    }

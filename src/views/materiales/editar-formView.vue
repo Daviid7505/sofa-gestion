@@ -163,11 +163,12 @@ export default {
           body: JSON.stringify(formData)
         });
         if (response.ok) {
-          router.push({ path: '/verMateriales', query: { mensaje: 'Material editado',  tipo: 'satisfactorio' } });
+          this.$router.push({ path: '/verMateriales', query: { mensaje: 'Material editado',  tipo: 'satisfactorio' } });
         } else {
-          router.push({ path: '/verMateriales', query: { mensaje: 'Error al editar material',  tipo: 'error' } });
+          this.$router.push({ path: '/verMateriales', query: { mensaje: 'Error al editar material',  tipo: 'error' } });
         }
       } catch (error) {
+        this.$router.push({ path: '/verMateriales', query: { mensaje: 'Error al editar material',  tipo: 'error' } });
         console.error('Error:', error);
       }
     }

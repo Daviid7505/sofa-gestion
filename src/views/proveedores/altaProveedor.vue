@@ -64,14 +64,13 @@ export default {
        });
 
        if (response.ok) {
-         alert('Proveedor agregado exitosamente');
-         this.$router.push('/verproveedores');
+         this.$router.push({path:'/verproveedores', query:{mensaje:'Proveedor agregado exitosamente', tipo:'satisfactorio'}});
        } else {
          alert('Error al agregar el proveedor');
+         this.$route.push({path:'/verproveedores', query:{mensaje: 'Error al agregar el proveedor', tipo:'error'}})
        }
      } catch (error) {
        console.error('Error:', error);
-       alert('Error de red al agregar el proveedor');
      }
    }
  }

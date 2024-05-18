@@ -95,6 +95,7 @@ export default {
           email: this.cliente.email,
           telefono: this.cliente.telefono
         };
+      try{
 
         const response = await fetch('http://localhost:8088/cliente/modificar', {
           method: 'PUT',
@@ -104,11 +105,16 @@ export default {
           body: JSON.stringify(formData)
         });
         if (response.ok) {
-          console.log('Cliente editado exitosamente');
-          router.push({ path: '/verclientes', query: { mensaje: 'Cliente editado',  tipo: 'satisfactorio' } });
+          
+          this.$router.push({ path: '/verclientes', query: { mensaje: 'Cliente editado',  tipo: 'satisfactorio' } });
         } else {
-          console.error('Error al editar el cliente');
+          this.$router.push({ path: '/verclientes', query: { mensaje: 'Error al editar cliente',  tipo: 'error' } });
+          
         }
+      } catch (error){
+        this.$router.push({path: '/verclientes', query:{ mensaje:'Error al editar el cliente', tipo:'error'}});
+        console.error('Error:', error);
+      }  
     }
   }
 };

@@ -84,9 +84,10 @@ import cancelbutton from '@/components/cancelbutton.vue'
          });
          if (response.ok) {
            console.log('Material editado exitosamente');
-           router.push({ path: '/verproveedores', query: { mensaje: 'Proveedor editado',  tipo: 'satisfactorio' } });
+           this.$router.push({ path: '/verproveedores', query: { mensaje: 'Proveedor editado',  tipo: 'satisfactorio' } });
          } else {
            console.error('Error al editar los datos del proveedor');
+           this.$router.push({path:'/verproveedores', query: { mensaje: 'Error al editar proveedor', tipo:'error'}})
          }
      }
    }

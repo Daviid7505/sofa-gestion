@@ -82,7 +82,7 @@
         // Verificar si la llamada fue exitosa
         if (response.ok) {
           // Aquí puedes manejar la respuesta si es necesario
-         this.$router.push({path:'/verMateriales', query: { mensaje: 'Sofá creado exitosamente', tipo:'satisfactorio'}})
+         this.$router.push({path:'/versofas', query: { mensaje: 'Sofá creado exitosamente', tipo:'satisfactorio'}})
         } else {
           // Si la llamada no fue exitosa, mostrar el mensaje de error
           this.$router.push({path:'/versofas', query: {mensaje: 'Error al crear el sofá', tipo: 'error'}})
