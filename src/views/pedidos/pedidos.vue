@@ -58,6 +58,8 @@
                   <div class="d-flex flex-row">
                     <router-link :to="'/editar-sofa/' + pedido.idPedido"><editbutton/></router-link>
                     <div class="separador"></div>
+                    <detailbutton/>
+                    <div class="separador"></div>
                     <trashbutton/>
                   </div>
                 </td>
@@ -74,10 +76,11 @@
   import { format } from 'date-fns';
   import editbutton from '../../components/editbutton.vue';
   import trashbutton from '../../components/trashbutton.vue';
+  import detailbutton from '../../components/detailbutton.vue';
   import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery } from '@/js/notificacion.js';
   
   export default {
-    components: { editbutton, trashbutton },
+    components: { editbutton, trashbutton, detailbutton },
     name: 'verpedidos',
     setup() {
       const pedidos = ref([]);
