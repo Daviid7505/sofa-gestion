@@ -12,8 +12,8 @@
           <div class="form-row">
             <div class="d-flex flex-row">
               <div>
-                <label for="nombre">Cliente</label>
-                <select class="form-select" id="nombre" v-model="vendedor" required>
+                <label class="ref-cliente">Cliente</label>
+                <select class="form-select" id="nombre" v-model="idCliente" required>
                   <option v-for="cliente in clientes" :key="cliente.idCliente" :value="cliente.idCliente">{{ cliente.nombre + ' ' + cliente.apellidos }}</option>
                 </select>
               </div>
@@ -25,7 +25,7 @@
             </div>
             <div class="d-flex flex-row mt-3">
               <div>
-                <label for="vendedor">Vendedor</label>
+                <label class="ref-empleado">Vendedor</label>
                 <select class="form-select" id="vendedor" v-model="idEmpleado" required>
                   <option v-for="empleado in empleados" :key="empleado.idEmpleado" :value="empleado.idEmpleado">{{ empleado.nombre + ' ' + empleado.apellidos }}</option>
                 </select>
@@ -52,7 +52,7 @@
       return {
         idCliente: '',
         fecha: '',
-        idVendedor: '',
+        idEmpleado: '',
         clientes: [],
         empleados: []
       };
