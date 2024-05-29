@@ -1,7 +1,6 @@
 <template>
     <header>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </header>
 
     <div class="container">
@@ -80,18 +79,11 @@
         </div>
       </form>
     </div>
-    <div class="container">
-      <!-- Div para mostrar el mensaje de error en la parte inferior del formulario -->
-      <div v-if="mensajeErrorFormulario.length" class="alert alert-danger error-detalle">
-        <div class="centrador-error" v-for="(error, index) in mensajeErrorFormulario" :key="index">
-          <i class='bx bx-error bx-tada bx-flip-horizontal'></i>{{ error }}
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
+
 import { onMounted } from 'vue';
 import confirmbutton from '@/components/confirmbutton.vue'
 import cancelbutton from '@/components/cancelbutton.vue'
@@ -112,8 +104,7 @@ export default {
       fecha: '',
       precio: '',
       idPedido: null,
-      idSofa: null,
-      mensajeErrorFormulario: []
+      idSofa: null
     };
   },
   setup(){
@@ -188,38 +179,25 @@ export default {
         });
 
         if (response.ok) {
-        const data = await response.json();
-          if (!data.error) {
-            this.$router.push({ path: '/verpedidos', query: { mensaje: 'Detalle agregado exitosamente', tipo: 'satisfactorio' } });
-          } else {
-            this.mensajeErrorFormulario =[data.error];
-          }
+         
+          this.$router.push({path:'/verpedidos', query: {mensaje: 'Detalle agregado exitosamente', tipo:'satisfactorio'}});
         } else {
-            const errorData = await response.json();
-            if (errorData.errors) {
-                this.mensajeErrorFormulario = errorData.errors;
-              } else {
-                this.mensajeErrorFormulario = [errorData.error];
-              }
-           }
-    }catch (error) {
-      console.error('Error:', error);
-      this.mensajeErrorFormulario = ['Error al procesar la solicitud'];
+          this.$router.push({path:'/verpedidos', query: {mensaje: 'Error al agregar detalle', tipo:'error'}});
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        
+        
+      }
     }
   }
-}
 };
-
 </script>
   
   <style scoped>
-  @import url('/src/assets/error-detalle.css');
   .container {
     justify-content: center;
     align-items: center;
-    display:flex;
-    flex-direction: column;
-   
   }
   
   form {

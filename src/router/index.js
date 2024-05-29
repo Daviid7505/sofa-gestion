@@ -20,6 +20,7 @@ import altaEmpleado from '@/views/empleados/altaEmpleado.vue'
 import editarEmpleado from '@/views/empleados/editarEmpleado.vue'
 import verDetallePedido from '@/views/detallePedido/detallePedido.vue'
 import altaDetallePedido from '@/views/detallePedido/altaDetallePedido.vue'
+import verSofaMateriales from '@/views/sofa-materiales/sofamateriales.vue'
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -129,6 +130,11 @@ const router = createRouter({
           name: 'vistaAltaDetallePedido',
           component: altaDetallePedido
         },
+      {
+        path:'/materiales-sofa/:idSofa',
+        name:'vistaSofaMateriales',
+        component: verSofaMateriales
+      }
       
 ]
 })

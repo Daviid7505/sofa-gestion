@@ -35,6 +35,8 @@
                 <div class="d-flex flex-row">
                   <router-link :to="'/editar-sofa/' + sofa.idSofa"><editbutton/></router-link>
                   <div class="separador"></div>
+                  <router-link :to="'/materiales-sofa/' + sofa.idSofa"><materialbutton/></router-link>
+                  <div class="separador"></div>
                   <trashbutton @click="eliminarSofa(sofa.idSofa)"></trashbutton>
                 </div>
               </td>
@@ -47,6 +49,7 @@
 </template>
 
 <script>
+import materialbutton from '@/components/materialbutton.vue';
 import addbutton from '@/components/addbutton.vue';
 import editbutton from '../../components/editbutton.vue';
 import trashbutton from '@/components/trashbutton.vue';
@@ -56,7 +59,7 @@ import { onMounted } from 'vue';
 import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery, limpiarMensaje, ocultarMensajeConRetraso } from '@/js/notificacion.js';
 
 export default {
-  components: { addbutton, editbutton, trashbutton, notification },
+  components: { addbutton, editbutton, trashbutton, notification, materialbutton },
   name:'versofas',
   setup() {
     let sofas = ref([]);

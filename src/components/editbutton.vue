@@ -5,7 +5,7 @@
 
     <button class="editbutton" type="submit">
       <i class="fa-regular fa-pen-to-square"></i>
-     <!-- <box-icon type='solid' color='#ffffff' name='edit-alt'></box-icon> --> <span>Editar</span>
+      <span>Editar</span>
 </button>
 
 

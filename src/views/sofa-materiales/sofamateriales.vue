@@ -1,4 +1,20 @@
 
+import proveedoresVue from '../proveedores/proveedores.vue';
+
+import proveedoresVue from '../proveedores/proveedores.vue';
+
+import sofasVue from '../sofas/sofas.vue';
+
+import sofasVue from '../sofas/sofas.vue';
+
+import sofasVue from '../sofas/sofas.vue';
+
+import sofasVue from '../sofas/sofas.vue';
+
+import sofasVue from '../sofas/sofas.vue';
+
+import sofasVue from '../sofas/sofas.vue';
+
 <template>
 
     <div class="container">
@@ -7,7 +23,7 @@
    
       <div class="container-title">
         <div class="title"> 
-          <h1 class="text-left">Detalles pedido {{ idPedido }}</h1>
+          <h1 class="text-left">Materiales ref-sofa {{ idSofa }}</h1> <h1>Modelo Luna</h1>
         </div>
         <div class="container-alta"> 
           <router-link to="/crear-detallePedido" style="text-decoration:none;"> <addbutton/></router-link>
@@ -20,32 +36,33 @@
             <thead class="center">
               <tr>
                
-                <th scope="col">Fecha</th>
-                <th scope="col">Modelo</th>
+                <th scope="col">Referencia material</th>
+                <th scope="col">Referencia proveedor</th>
+                <th scope="col">Nombre proveedor</th>
+                <th scope="col">Nombre material</th>
                 <th scope="col">Descripción</th>
-                <th scope="col">Plazas</th>
-                <th scope="col">Densidad</th>
                 <th scope="col">Cantidad</th>
-                <th scope="col">Precio</th>
+                <th scope="col">Unidad medida</th>
                 <th scope="col"> </th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="detalle in detallePedido" :key="detalle.idDePed">
+              <tr v-for="sofaMaterial in sofaMateriales" :key="sofaMaterial.idSofaMateriales">
                
-                <td>{{ formatFecha(detalle.fecha)}}</td>
-                <td>{{ detalle.sofa.nombre }}</td>
-                <td>{{ detalle.sofa.descripcion }}</td>
-                <td>{{ detalle.plazas}}</td>
-                <td>{{ detalle.densCojin }}</td>
-                <td>{{ detalle.cantidad}}</td>
-                <td>{{ detalle.precio }} €</td>
+                <td>{{ sofaMaterial.material.idMaterial}}</td>
+                <td>{{ sofaMaterial.material.refMaterialProveedor }}</td>
+                <td>{{ sofaMaterial.material.proveedor.nombre }}</td>
+                <td>{{ sofaMaterial.material.nombre }}</td>
+                <td>{{ sofaMaterial.material.descripcion }}</td>
+                <td>{{ sofaMaterial.cantidadUtilizada}}</td>
+                <td>{{ sofaMaterial.material.unidadMedida }}</td>
+
                 <td class="botones">
                   <div class="d-flex flex-row">
                     <router-link :to="'/editar-material/'"> <editbutton/></router-link>
                     <div class="separador"></div>
-                    <trashbutton @click="eliminarDetalle(detalle.idDePed)"> </trashbutton>
-                  </div>
+                   <!-- <trashbutton @click="eliminarDetalle(detalle.idDePed)"> </trashbutton>
+                  --></div>
                 </td>
               </tr>
             </tbody>
@@ -71,16 +88,16 @@
   export default {
     components: { addbutton, editbutton, trashbutton, notification},
     setup() {
-      let detallePedido =  ref([]);
+      let sofaMateriales =  ref([]);
       const route = useRoute();
-      const idPedido = ref(route.params.idPedido);
+      const idSofa = ref(route.params.idSofa);
 
-      const getDetallePedido = async () => {
-      const idPedido = route.params.idPedido;
+      const getSofaMateriales = async () => {
+      const idSofa = route.params.idSofa;
       try {
-        const res = await fetch(`http://localhost:8088/detallepedido/porPedido/${idPedido}`);
+        const res = await fetch(`http://localhost:8088/sofaMaterial/porSofa/${idSofa}`);
         const data = await res.json();
-        detallePedido.value = data;
+        sofaMateriales.value = data;
       } catch (error) {
         console.error('Error al obtener los detalles del pedido:', error);
       }
@@ -92,30 +109,11 @@
 
       onMounted(() => {
         limpiarMensaje();
-        getDetallePedido();
+        getSofaMateriales();
         verificarMensajeQuery(); // Verifica si se ha enviado la query "mensaje" al cargar la página
       });
 
-      const eliminarDetalle = (idDePed) => {
-      if (confirm('¿Estás seguro de que deseas eliminar este detalle?')) {
-        fetch(`http://localhost:8088/detallepedido/eliminar/${idDePed}`, {
-          method: 'DELETE',
-        })
-        .then(() => {
-          // Si la eliminación fue exitosa, actualizamos la lista de empleados
-          getDetallePedido();
-          mostrarMensaje('Detalle eliminado exitosamente', 'satisfactorio');
-          ocultarMensajeConRetraso();
-        })
-        .catch(error => {
-          mostrarMensaje('Error al eliminar detalle', 'error');
-          ocultarMensajeConRetraso();
-          console.error('Error:', error);
-        });
-      }
-    };
-
-      return {idPedido, eliminarDetalle, formatFecha, detallePedido, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, notification};
+      return { idSofa, formatFecha, sofaMateriales, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, notification};
     }
   };
   

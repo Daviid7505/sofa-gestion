@@ -1,0 +1,18 @@
+
+.error-detalle{
+    margin-top:15px;
+    width:50%;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+}
+.bx-error{
+    color:#58151c;
+    font-size:22px;
+}
+
+.centrador-error{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}

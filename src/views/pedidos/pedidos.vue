@@ -41,7 +41,7 @@
               <td>{{ formatFecha(pedido.fecha) }}</td>
               <td>{{ pedido.cliente ? pedido.cliente.nombre + ' ' + pedido.cliente.apellidos : 'Sin cliente' }}</td>
               <td>{{ pedido.vendedor ? pedido.vendedor.nombre + ' ' + pedido.vendedor.apellidos : 'Sin vendedor' }}</td>
-              <td>{{ pedido.estado ? pedido.estado.nombre : 'Sin estado' }}</td>
+              <td class="estado"><div :class="estadoClass(pedido.estado)">{{pedido.estado}}</div></td>
               <td class="botones">
                 <div class="d-flex flex-row">
                   <router-link :to="'/editar-pedido/' + pedido.idPedido"><editbutton/></router-link>
@@ -67,6 +67,7 @@ import editbutton from '@/components/editbutton.vue';
 import trashbutton from '@/components/trashbutton.vue';
 import detailbutton from '@/components/detailbutton.vue';
 import notification from '@/components/notification.vue';
+import {estadoClass} from '@/js/asignar-estado.js';
 import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery, limpiarMensaje, ocultarMensajeConRetraso } from '@/js/notificacion.js';
 
 export default {
@@ -76,18 +77,46 @@ export default {
     const pedidos = ref([]);
     const searchQuery = ref('');
 
-    const getPedidos = () => {
-      fetch('http://localhost:8088/pedido/lista')
-        .then(res => res.json())
-        .then(data => {
-          pedidos.value = data;
+
+
+    const getEstadoPedido = async (idPedido) => {
+  try {
+    const response = await fetch(`http://localhost:8088/tarea/estadoPorPedido/${idPedido}`);
+    if (!response.ok) {
+      throw new Error('Error al obtener el estado del pedido');
+    }
+    const data = await response.text();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    return null;
+  }
+};
+
+    const getPedidos = async () => {
+    try {
+      const response = await fetch('http://localhost:8088/pedido/lista');
+      if (!response.ok) {
+        throw new Error('Error al obtener la lista de pedidos');
+      }
+      const data = await response.json();
+      // Obtener el estado de cada pedido
+      const pedidosConEstado = await Promise.all(
+        data.map(async (pedido) => {
+          const estado = await getEstadoPedido(pedido.idPedido);
+          return { //Dentro del pedido creamos el campo estado, ya que el objeto en java no lo tiene
+            ...pedido,
+            estado: estado || 'Sin estado' //Si el estado está vacío nos devuelve Sin estado
+          };
         })
-        .catch(error => {
-          mostrarMensaje('Error al obtener la lista de pedidos', 'error');
-          ocultarMensajeConRetraso();
-          console.error('Error:', error);
-        });
-    };
+      );
+      pedidos.value = pedidosConEstado;
+    } catch (error) {
+      mostrarMensaje('Error al obtener la lista de pedidos', 'error');
+      ocultarMensajeConRetraso();
+      console.error('Error:', error);
+    }
+  };
 
     const eliminarPedido = (idPedido) => {
       if (confirm('¿Estás seguro de que deseas eliminar este pedido?')) {
@@ -108,19 +137,6 @@ export default {
     };
 
 
-    const getEstadoPedido = async (idPedido) => {
-  try {
-    const response = await fetch(`http://localhost:8088/tarea/estadoPorPedido/${idPedido}`);
-    if (!response.ok) {
-      throw new Error('Error al obtener el estado del pedido');
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error:', error);
-    return null;
-  }
-};
 
     
 
@@ -132,11 +148,11 @@ export default {
       return pedidos.value.filter(pedido => {
         const searchTerm = searchQuery.value.toLowerCase();
         const cliente = pedido.cliente ? (pedido.cliente.nombre + ' ' + pedido.cliente.apellidos).toLowerCase() : '';
-        const estado = pedido.estado ? pedido.estado.nombre.toLowerCase() : '';
+       // const estado = pedido.estado ? pedido.estado.nombre.toLowerCase() : '';
         const fecha = formatFecha(pedido.fecha).toLowerCase();
         const vendedor = pedido.vendedor ? (pedido.vendedor.nombre + ' ' + pedido.vendedor.apellidos).toLowerCase() : '';
         const numPedido = pedido.idPedido ? pedido.idPedido.toString() : '';
-        return cliente.includes(searchTerm) || estado.includes(searchTerm) || fecha.includes(searchTerm) || vendedor.includes(searchTerm) || numPedido.includes(searchTerm);
+        return cliente.includes(searchTerm) || vendedor.includes(searchTerm) || numPedido.includes(searchTerm);
       });
     });
 
@@ -146,11 +162,12 @@ export default {
       verificarMensajeQuery();
     });
 
-    return { notification, pedidos, searchQuery, filteredPedidos, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, formatFecha, eliminarPedido };
+    return { notification, pedidos, searchQuery, filteredPedidos, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, formatFecha, eliminarPedido, estadoClass};
   }
 };
 </script>
 
-<style>
-/* Añadir estilos necesarios */
+<style scope>
+@import url('/src/assets/colores-estados.css');
+
 </style>
