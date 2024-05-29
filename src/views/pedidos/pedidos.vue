@@ -106,7 +106,7 @@ export default {
           const estado = await getEstadoPedido(pedido.idPedido);
           return { //Dentro del pedido creamos el campo estado, ya que el objeto en java no lo tiene
             ...pedido,
-            estado: estado || 'Sin estado' //Si el estado está vacío nos devuelve Sin estado
+            estado: estado || 'Sin productos' //Si el estado está vacío nos devuelve Sin estado
           };
         })
       );

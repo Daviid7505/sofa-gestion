@@ -88,7 +88,6 @@ export default {
         .then(res => res.json())
         .then(data => {
           sofas.value = data;
-          console.log(data);
         })
         .catch(error => {
           mostrarMensaje('Error al obtener la lista de sofás', 'error');

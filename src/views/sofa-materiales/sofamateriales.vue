@@ -1,4 +1,6 @@
 
+import sofasVue from '../sofas/sofas.vue';
+
 import proveedoresVue from '../proveedores/proveedores.vue';
 
 import proveedoresVue from '../proveedores/proveedores.vue';
@@ -26,7 +28,7 @@ import sofasVue from '../sofas/sofas.vue';
           <h1 class="text-left">Materiales ref-sofa {{ idSofa }}</h1> <h1>Modelo Luna</h1>
         </div>
         <div class="container-alta"> 
-          <router-link to="/crear-detallePedido" style="text-decoration:none;"> <addbutton/></router-link>
+          <router-link :to="'/sofa-asignar-material/' + idSofa" style="text-decoration:none;"> <addbutton/></router-link>
         </div>
     </div>
   
@@ -59,10 +61,10 @@ import sofasVue from '../sofas/sofas.vue';
 
                 <td class="botones">
                   <div class="d-flex flex-row">
-                    <router-link :to="'/editar-material/'"> <editbutton/></router-link>
+                    <router-link :to="'/sofa-editar-material/'+ sofaMaterial.idSofaMateriales"> <editbutton/></router-link>
                     <div class="separador"></div>
-                   <!-- <trashbutton @click="eliminarDetalle(detalle.idDePed)"> </trashbutton>
-                  --></div>
+                   <trashbutton @click="eliminarSofaMaterial(sofaMaterial.idSofaMateriales)"> </trashbutton>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -103,17 +105,39 @@ import sofasVue from '../sofas/sofas.vue';
       }
     };
 
-        const formatFecha = (fecha) => {
-        return format(new Date(fecha), 'dd-MM-yyyy');
-    };
-
-      onMounted(() => {
+    onMounted(() => {
         limpiarMensaje();
         getSofaMateriales();
         verificarMensajeQuery(); // Verifica si se ha enviado la query "mensaje" al cargar la página
       });
 
-      return { idSofa, formatFecha, sofaMateriales, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, notification};
+    const eliminarSofaMaterial = (idSofaMateriales) => {
+        console.log(idSofaMateriales);
+      if (confirm('¿Estás seguro de que deseas eliminar este material?')) {
+        fetch(`http://localhost:8088/sofaMaterial/eliminar/${idSofaMateriales}`, {
+          method: 'DELETE',
+        })
+        .then(() => {
+          // Si la eliminación fue exitosa, actualizamos la lista de empleados
+          getSofaMateriales();
+          mostrarMensaje('Material eliminado exitosamente', 'satisfactorio');
+          ocultarMensajeConRetraso();
+        })
+        .catch(error => {
+          mostrarMensaje('Error al eliminar material', 'error');
+          ocultarMensajeConRetraso();
+          console.error('Error:', error);
+        });
+      }
+    };
+
+        const formatFecha = (fecha) => {
+        return format(new Date(fecha), 'dd-MM-yyyy');
+    };
+
+     
+
+      return { eliminarSofaMaterial, idSofa, formatFecha, sofaMateriales, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, notification};
     }
   };
   

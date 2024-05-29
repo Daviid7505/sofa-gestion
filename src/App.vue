@@ -25,6 +25,9 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" ><router-link to="/verempleados">Empleados</router-link></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" ><router-link to="/departamentos">Departamentos</router-link></a>
+        </li>
       </ul>
     </div>
     

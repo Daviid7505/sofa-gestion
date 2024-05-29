@@ -21,6 +21,9 @@ import editarEmpleado from '@/views/empleados/editarEmpleado.vue'
 import verDetallePedido from '@/views/detallePedido/detallePedido.vue'
 import altaDetallePedido from '@/views/detallePedido/altaDetallePedido.vue'
 import verSofaMateriales from '@/views/sofa-materiales/sofamateriales.vue'
+import asignarMaterial from '@/views/sofa-materiales/asignarmateriales.vue'
+import editarSofaMaterial from '@/views/sofa-materiales/editarSofaMaterial.vue'
+import departamentos from '@/views/departamentos/departamentos.vue'
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -134,8 +137,24 @@ const router = createRouter({
         path:'/materiales-sofa/:idSofa',
         name:'vistaSofaMateriales',
         component: verSofaMateriales
+      },
+        {
+          path:'/sofa-asignar-material/:idSofa',
+          name:'vistaAsignarMaterial',
+          component:asignarMaterial
+        },
+        {
+          path:'/sofa-editar-material/:idSofaMaterial',
+          name:'vistaEditarSofaMaterial',
+          component:editarSofaMaterial
+        },
+      {
+        path:'/departamentos',
+        name:'vistaDepartamentos',
+        component:departamentos
       }
-      
+
+        
 ]
 })
 

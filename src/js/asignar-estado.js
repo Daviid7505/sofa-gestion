@@ -11,6 +11,6 @@ export const estadoClass = (estado) => {
       case 'finalizado':
         return 'finalizado';
       default:
-        return '';
+        return 'vacio';
     }
   };

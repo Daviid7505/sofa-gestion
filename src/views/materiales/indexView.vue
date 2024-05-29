@@ -20,6 +20,7 @@
           <thead class="center">
             <tr>
              
+              <th scope="col">Referencia</th>
               <th  scope="col">Nombre</th>
               <th scope="col">Descripción</th>
               <th scope="col">RefMaterialProveedor</th>
@@ -32,6 +33,7 @@
           </thead>
           <tbody>
             <tr v-for="material in materiales" :key="material.idMaterial">
+              <td>{{ material.idMaterial }}</td>
               <td>{{ material.nombre }}</td>
               <td>{{ material.descripcion }}</td>
               <td>{{ material.refMaterialProveedor }}</td>

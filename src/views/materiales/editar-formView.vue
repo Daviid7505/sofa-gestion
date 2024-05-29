@@ -72,7 +72,6 @@
 </template>
 
 <script>
-import router from '@/router';
 import confirmbutton from '@/components/confirmbutton.vue'
 import cancelbutton from '@/components/cancelbutton.vue'
 export default {
