@@ -24,6 +24,7 @@ import verSofaMateriales from '@/views/sofa-materiales/sofamateriales.vue'
 import asignarMaterial from '@/views/sofa-materiales/asignarmateriales.vue'
 import editarSofaMaterial from '@/views/sofa-materiales/editarSofaMaterial.vue'
 import departamentos from '@/views/departamentos/departamentos.vue'
+import asignarTareaEmpleado from '@/views/tareas/asignarTareaEmpleado.vue'
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -152,7 +153,12 @@ const router = createRouter({
         path:'/departamentos',
         name:'vistaDepartamentos',
         component:departamentos
-      }
+      },
+        {
+          path:'/asignar-tarea/:idTarea',
+          name:'vistaAsignarTareaEmpleado',
+          component:asignarTareaEmpleado
+        }
 
         
 ]

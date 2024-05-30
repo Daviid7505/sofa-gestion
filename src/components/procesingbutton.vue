@@ -2,12 +2,25 @@
     <header>
       <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </header>
-  <button class="procesingbutton" type="submit">
+  <button class="procesingbutton" type="submit" @click="handleClick">
     <i class='bx bxs-time' ></i>
     <span>Procesando</span>
   </button>  
 </template>
+<script>
+  src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"
+export default{
+  name:'Procesingbutton',
+  emits: ['click'],
+  methods:{
+    handleClick(){
+      this.$emit('click');
+    }
+  }
+}
+</script>
 <style>
+
 .procesingbutton{
   
     border:none;
@@ -35,7 +48,3 @@
    
    </style>
    
-   <script>
-   src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"
-   
-   </script>

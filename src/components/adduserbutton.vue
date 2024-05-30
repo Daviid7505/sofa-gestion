@@ -2,19 +2,20 @@
     <header>
       <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </header>
-  <button class="endbutton" type="submit">
-    <i class='bx bx-check' ></i>
-    <span>Terminado</span>
+  <button class="adduserbutton" type="submit">
+    <i class='bx bxs-user-plus' ></i>
+    <span>Asignar</span>
   </button>  
 </template>
 <style>
-.endbutton{
+.adduserbutton{
   
     border:none;
     color:white;
     background-color:rgb(15, 164, 1);
     border-radius:6px;
     width:120px;
+    height:34px;
     display:flex;
     align-items:center;
     transition: all 0.3s ease-out;
@@ -22,11 +23,11 @@
             background-color:rgb(10, 107, 1);
         }
    }
-   .endbutton span{
-     padding-left:2px;
+   .adduserbutton span{
+     padding-left:10px;
    }
    
-   .endbutton i{
+   .adduserbutton i{
      font-size:22px !important;
      
    }

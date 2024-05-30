@@ -2,7 +2,6 @@
   <header>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   </header>
-
   <div class="container">
     <!-- Mensajes de notificación -->
     <notification :mensaje="mensaje" :mensajeVisible="mensajeVisible" :mensajeError="mensajeError" :mensajeSatisfactorio="mensajeSatisfactorio"/>
@@ -14,7 +13,6 @@
         <router-link to="/crear-pedido" style="text-decoration:none;"> <addbutton/></router-link>
       </div>
     </div>
-
     <!-- Barra de búsqueda -->
     <div class="row mb-3">
       <div class="col-md-12">

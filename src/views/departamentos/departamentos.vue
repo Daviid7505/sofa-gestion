@@ -1,5 +1,7 @@
 
 <template>
+   <!-- Mensajes de notificación -->
+   <notification :mensaje="mensaje" :mensajeVisible="mensajeVisible" :mensajeError="mensajeError" :mensajeSatisfactorio="mensajeSatisfactorio"/>
     <div class="title-container">
       <h3>Departamentos</h3>
     </div>
@@ -67,18 +69,17 @@
               <td>{{ task.empleado?.nombre ?? ''}}</td>
               <td class="botones">
                 <div class="d-flex flex-row">
-                  Asig
-                   <trashbutton @click="eliminarSofaMaterial()"> </trashbutton> 
+                  
+                   <router-link :to="'/asignar-tarea/' + task.idTarea" style="text-decoration:none; "><adduserbutton ></adduserbutton></router-link> 
                    <div class="separador"></div>
-                   <unbindbutton @click="desasignarTarea(task.idTarea)"> </unbindbutton> 
+                   <unbindbutton @click="desasignarTarea(task.idTarea)"></unbindbutton> 
                    <div class="separador"></div>
-                   <procesingbutton @click="asignarEstadoProcesando(task.idTarea)"> </procesingbutton> 
+                   <procesingbutton @click="asignarEstadoProcesando(task.idTarea)"></procesingbutton> 
                    <div class="separador"></div>
                   
-                   <endbutton @click="asignarEstadoTerminado(task.idTarea)"> </endbutton> 
+                   <endbutton @click="asignarEstadoTerminado(task.idTarea)"></endbutton> 
                    <div class="separador"></div>
-                   Cancelar
-                   <trashbutton @click="asignarEstadoCancelar(task.idTarea)"> </trashbutton> 
+                   <cancelbutton @click="asignarEstadoCancelar(task.idTarea)"></cancelbutton> 
                 </div>
               </td>
             </tr>
@@ -96,13 +97,15 @@ import notification from '@/components/notification.vue';
 import endbutton from '@/components/endbutton.vue';
 import procesingbutton from '@/components/procesingbutton.vue';
 import unbindbutton from '@/components/unbindbutton.vue';
+import adduserbutton from '@/components/adduserbutton.vue';
+import cancelbutton from '@/components/cancelbutton.vue';
 
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery, limpiarMensaje, ocultarMensajeConRetraso } from '@/js/notificacion.js';
 
 export default {
-  components: { procesingbutton, endbutton, addbutton, trashbutton, notification, unbindbutton },
+  components: { cancelbutton, adduserbutton, procesingbutton, endbutton, addbutton, trashbutton, notification, unbindbutton },
   data() {
     return {
       tasks: [],
@@ -121,12 +124,19 @@ export default {
         2: 'Costura',
         3: 'Tapizado',
         4: 'Enfundado'
-      }
+      },
+      mensaje,
+      mensajeVisible,
+      mensajeSatisfactorio,
+      mensajeError
     };
   },
   mounted() {
-    // Nuevo: Seleccionar automáticamente el departamento de Carpintería al entrar en la vista
     this.fetchTasks(this.activeDepartment);
+    limpiarMensaje();
+    // Nuevo: Seleccionar automáticamente el departamento de Carpintería al entrar en la vista
+    
+    verificarMensajeQuery();
   },
   computed: {
     filteredTasksBySearch() {
@@ -190,9 +200,13 @@ export default {
           this.tasks = data;
           this.updateTaskCounts(data);
           this.filteredTasks = this.tasks.filter(task => task.estado.nombre === 'Sin asignar'); // Optional: Update filteredTasks to show tasks with the 'Sin asignar' state
+          mostrarMensaje('Tarea desasignada exitosamente', 'satisfactorio');
+          ocultarMensajeConRetraso();
         })
         .catch(error => {
           console.error("Error al desasignar la tarea: ", error);
+          mostrarMensaje('Error al desasignar la tarea', 'error');
+          ocultarMensajeConRetraso();
         });
     },
     asignarEstadoProcesando(idTarea) {
@@ -231,7 +245,6 @@ export default {
       })
         .then(response => response.json())
         .then(data => {
-            console.log('Task updated:', data); // Agregar esta línea
           this.tasks = data;
           this.updateTaskCounts(data);
           this.filteredTasks = this.tasks.filter(task => task.estado.nombre === 'Sin asignar'); // Optional: Update filteredTasks to show tasks with the 'Sin asignar' state
@@ -240,6 +253,7 @@ export default {
           console.error("Error al desasignar la tarea: ", error);
         });
     }
+
   }
 };
 </script>
@@ -248,10 +262,13 @@ export default {
 .department-button-active {
   background-color: #120f6d !important; /* Cambia este color al que desees */
   color: #ffffff;
+  transition: all 0.3s ease-out;
 }
 .task-active {
   /* Cambia este color al que desees */
+  transition: all 0.2s ease-out !important;
   color: #120f6d !important;
+  border-bottom: 2px solid !important;
 }
 .busqueda{
     width:15%;
@@ -281,6 +298,7 @@ export default {
     height:10vh;
     align-items:flex-end;
     color:rgb(20, 27, 79);
+    transition: all 0.3s ease-out;
 }
 
 .departments-buttons-container{
@@ -289,6 +307,7 @@ export default {
     height:15vh;
     justify-content:center;
     align-items:center;
+    transition: all 0.3s ease-out;
 }
 .department-button{
     width:190px;
@@ -309,8 +328,6 @@ export default {
     width:100%;
     display:flex;
     justify-content:center;
-   
-
 }
 .task{
     display:flex;
@@ -330,14 +347,11 @@ export default {
     justify-content:center;
     font-size:42px;
     font-weight:bold;
-    
 }
 .type-task{
     display:flex;
     justify-content:center;
     font-size:19px;
-
-   
 }
 
 .tareas-sin-asignar{
