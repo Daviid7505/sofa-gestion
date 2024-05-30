@@ -10,6 +10,7 @@
     "@coreui/coreui": "^5.0.0",
     "@coreui/vue": "^5.0.0",
     "@popperjs/core": "^2.11.8",
+    "axios": "^1.7.2",
     "boostrap": "^2.0.0",
     "bootstrap": "^5.3.3",
     "boxicons": "^2.1.4",

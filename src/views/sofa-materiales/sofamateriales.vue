@@ -1,22 +1,3 @@
-
-import sofasVue from '../sofas/sofas.vue';
-
-import proveedoresVue from '../proveedores/proveedores.vue';
-
-import proveedoresVue from '../proveedores/proveedores.vue';
-
-import sofasVue from '../sofas/sofas.vue';
-
-import sofasVue from '../sofas/sofas.vue';
-
-import sofasVue from '../sofas/sofas.vue';
-
-import sofasVue from '../sofas/sofas.vue';
-
-import sofasVue from '../sofas/sofas.vue';
-
-import sofasVue from '../sofas/sofas.vue';
-
 <template>
 
     <div class="container">
@@ -112,7 +93,6 @@ import sofasVue from '../sofas/sofas.vue';
       });
 
     const eliminarSofaMaterial = (idSofaMateriales) => {
-        console.log(idSofaMateriales);
       if (confirm('¿Estás seguro de que deseas eliminar este material?')) {
         fetch(`http://localhost:8088/sofaMaterial/eliminar/${idSofaMateriales}`, {
           method: 'DELETE',
