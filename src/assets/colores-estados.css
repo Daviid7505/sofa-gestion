@@ -5,7 +5,7 @@
 
 .sin-asignar, .cancelado, .pendiente, .procesando, .finalizado, .vacio{
   border-radius: 24px;
-  width:70%;
+  width:120px;
   text-align:center;
   justify-content:center;
   align-items:center;
