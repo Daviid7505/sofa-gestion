@@ -1,5 +1,5 @@
 <template>
-   <div><h1>Actualizar datos del proveedor</h1></div>
+   <div><h1>Actualizar datos del material</h1></div>
    <div class="d-flex container" id="form-target">
     <form class="d-flex flex-column" @submit.prevent="enviarFormulario">
       <div class="form-row ">

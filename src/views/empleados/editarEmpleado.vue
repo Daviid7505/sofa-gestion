@@ -124,7 +124,7 @@
         perfiles:[],
         perfilIdInput: null,
         nombrePerfil:null,
-        esatdoInicial: null,
+        estadoInicial: null,
         estados:['Activo', 'Inactivo']
       };
     },
