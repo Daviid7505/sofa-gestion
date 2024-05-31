@@ -16,18 +16,26 @@
   border:none;
   border:none;
   color:white;
-  background-color:rgb(9, 115, 214);
+  background-color:rgb(19, 114, 202);
   border-radius:6px;
   width:100px;
   display:flex;
   align-items:center;
   height:30px;
+  transition: all 0.3s ease-out;
+  &:hover{
+    background-color:rgb(14, 75, 132);
+  }
 }
 
  .editbutton span{
    padding-left:10px;
- }
 
+ }
+.editbutton i{
+  margin-left:3px;
+  font-size:15px;
+}
 
 
 </style>

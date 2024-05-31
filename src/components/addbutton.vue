@@ -21,7 +21,10 @@
  width:100px;
  display:flex;
  align-items:center;
- 
+ transition: all 0.3s ease-out;
+        &:hover{
+            background-color:rgb(19, 128, 9);
+        }
 }
 .addbutton span{
   padding-left:10px;

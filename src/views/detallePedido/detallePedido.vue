@@ -19,14 +19,16 @@
           <table class="table table-hover table-responsive">
             <thead class="center">
               <tr>
-               
+                
                 <th scope="col">Fecha</th>
+                <th scoped="col">Ref detalle</th>
                 <th scope="col">Modelo</th>
                 <th scope="col">Descripción</th>
                 <th scope="col">Plazas</th>
                 <th scope="col">Densidad</th>
                 <th scope="col">Cantidad</th>
                 <th scope="col">Precio</th>
+               <!-- <th scope="col">Estado</th> -->
                 <th scope="col"> </th>
               </tr>
             </thead>
@@ -34,11 +36,13 @@
               <tr v-for="detalle in detallePedido" :key="detalle.idDePed">
                
                 <td>{{ formatFecha(detalle.fecha)}}</td>
+                <td>{{ detalle.idDePed }}</td>
                 <td>{{ detalle.sofa.nombre }}</td>
                 <td>{{ detalle.sofa.descripcion }}</td>
                 <td>{{ detalle.plazas}}</td>
                 <td>{{ detalle.densCojin }}</td>
                 <td>{{ detalle.cantidad}}</td>
+               <!--<td class="estado"><div :class="estadoClass(detalle.estado)">{{detalle.estado}}</div></td>-->
                 <td>{{ detalle.precio }} €</td>
                 <td class="botones">
                   <div class="d-flex flex-row">
@@ -64,6 +68,7 @@
   import editbutton from '@/components/editbutton.vue';
   import trashbutton from '@/components/trashbutton.vue';
   import notification from '@/components/notification.vue';
+  import {estadoClass} from '@/js/asignar-estado.js';
   import { ref } from 'vue';
   import { onMounted } from 'vue';
   import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery, limpiarMensaje, ocultarMensajeConRetraso } from '@/js/notificacion.js'; 
@@ -74,15 +79,40 @@
       let detallePedido =  ref([]);
       const route = useRoute();
       const idPedido = ref(route.params.idPedido);
+      const getEstadoDetallePedido = async (idDePed) => {
+        try{
+          const response = await fetch(`http://localhost:8088/tarea/porEstadoYDetalle/${idDePed}`);
+          if (!response.ok) {
+          throw new Error('Error al obtener el estado del detalle');
+        }   const data = await response.text();
+            return data;
+          }catch (error) {
+            console.error('Error:', error);
+            return null;
+          }
+        
+      };
 
       const getDetallePedido = async () => {
       const idPedido = route.params.idPedido;
       try {
         const res = await fetch(`http://localhost:8088/detallepedido/porPedido/${idPedido}`);
         const data = await res.json();
-        detallePedido.value = data;
+        // Obtener el estado de cada pedido
+        const detallePedidosConEstado = await Promise.all(
+          data.map(async (detallePedido) => {
+            const estado = await getEstadoDetallePedido(detallePedido.idDePed);
+            return { //Dentro del pedido creamos el campo estado, ya que el objeto en java no lo tiene
+              ...detallePedido,
+              estado: estado || 'Sin productos' //Si el estado está vacío nos devuelve Sin productos
+            };
+          })
+        );
+        detallePedido.value = detallePedidosConEstado;
       } catch (error) {
-        console.error('Error al obtener los detalles del pedido:', error);
+        mostrarMensaje('Error al obtener la lista de pedidos', 'error');
+        ocultarMensajeConRetraso();
+        console.error('Error:', error);
       }
     };
 
@@ -115,10 +145,12 @@
       }
     };
 
-      return {idPedido, eliminarDetalle, formatFecha, detallePedido, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, notification};
+      return {estadoClass, idPedido, eliminarDetalle, formatFecha, detallePedido, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, notification};
     }
   };
   
   </script>
-  
+<style scope>
+@import url('/src/assets/colores-estados.css');
+</style>
   

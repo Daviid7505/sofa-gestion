@@ -43,6 +43,10 @@ export default{
  display:flex;
  align-items:center;
  height:30px;
+ transition: all 0.3s ease-out;
+ &:hover{
+  background-color:rgb(163, 14, 14);
+ }
 }
 
 .bx{
@@ -50,7 +54,7 @@ export default{
 }
 
 .trashbutton span{
-   padding-left:10px;
+   padding-left:7px;
  }
 
 

@@ -17,19 +17,23 @@
   
  border:none;
  color:white;
- background-color:rgb(136, 67, 50);
+ background-color:rgb(214, 139, 27);
  border-radius:6px;
  width:100px;
+ height:30px;
  display:flex;
  align-items:center;
- 
+ transition: all 0.3s ease-out;
+        &:hover{
+            background-color:rgb(158, 103, 20);
+        }
 }
 .detailbutton span{
-  padding-left:8px;
+  padding-left:3px;
 }
 
-i{
-  padding-left:6px;
+.detailbutton svg{
+  margin-left:2px;
 }
 
 
