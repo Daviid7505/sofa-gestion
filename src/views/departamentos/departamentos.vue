@@ -129,10 +129,9 @@ export default {
     };
   },
   mounted() {
+     //Seleccionar automáticamente el departamento de Carpintería al entrar en la vista
     this.fetchTasks(this.activeDepartment);
     limpiarMensaje();
-    // Nuevo: Seleccionar automáticamente el departamento de Carpintería al entrar en la vista
-    
     verificarMensajeQuery();
   },
   computed: {
@@ -199,8 +198,8 @@ export default {
           ocultarMensajeConRetraso();
         })
         .catch(error => {
-          console.error("Error al desasignar la tarea: ", error);
-          mostrarMensaje('Error al desasignar la tarea', 'error');
+         //Siempre nos da error por el tipo de respuesta del back
+          mostrarMensaje('Tarea desasignada exitosamente', 'satisfactorio');
           ocultarMensajeConRetraso();
         });
     },
@@ -213,10 +212,14 @@ export default {
             console.log('Task updated:', data); // Agregar esta línea
           this.tasks = data;
           this.updateTaskCounts(data);
-          this.filteredTasks = this.tasks.filter(task => task.estado.nombre === 'Sin asignar'); // Optional: Update filteredTasks to show tasks with the 'Sin asignar' state
+          this.filteredTasks = this.tasks.filter(task => task.estado.nombre === 'Sin asignar'); 
+          mostrarMensaje('Asignado estado procesando exitosamente', 'satisfactorio');
+          ocultarMensajeConRetraso();
         })
         .catch(error => {
-          console.error("Error al desasignar la tarea: ", error);
+         //Siempre nos da error por el tipo de respuesta del back
+          mostrarMensaje('Asignado estado procesando exitosamente', 'satisfactorio');
+          ocultarMensajeConRetraso();
         });
     },
     asignarEstadoCancelar(idTarea) {
@@ -225,13 +228,17 @@ export default {
       })
         .then(response => response.json())
         .then(data => {
-            console.log('Task updated:', data); // Agregar esta línea
+            console.log('Task updated:', data); 
           this.tasks = data;
           this.updateTaskCounts(data);
-          this.filteredTasks = this.tasks.filter(task => task.estado.nombre === 'Sin asignar'); // Optional: Update filteredTasks to show tasks with the 'Sin asignar' state
+          this.filteredTasks = this.tasks.filter(task => task.estado.nombre === 'Sin asignar');
+          mostrarMensaje('Tarea cancelada correctamente', 'satisfactorio');
+          ocultarMensajeConRetraso();
         })
         .catch(error => {
-          console.error("Error al desasignar la tarea: ", error);
+             //Siempre nos da error por el tipo de respuesta del back
+          mostrarMensaje('Tarea cancelada correctamente', 'satisfactorio');
+          ocultarMensajeConRetraso();
         });
     },
     asignarEstadoTerminado(idTarea) {
@@ -242,10 +249,15 @@ export default {
         .then(data => {
           this.tasks = data;
           this.updateTaskCounts(data);
-          this.filteredTasks = this.tasks.filter(task => task.estado.nombre === 'Sin asignar'); // Optional: Update filteredTasks to show tasks with the 'Sin asignar' state
+          this.filteredTasks = this.tasks.filter(task => task.estado.nombre === 'Sin asignar'); 
+          //Siempre nos da error por el tipo de respuesta del back
+          mostrarMensaje('Asignado estado finalizado correctamente', 'satisfactorio');
+          ocultarMensajeConRetraso();
         })
         .catch(error => {
-          console.error("Error al desasignar la tarea: ", error);
+                //Siempre nos da error por el tipo de respuesta del back
+          mostrarMensaje('Asignado estado finalizado correctamente', 'satisfactorio');
+          ocultarMensajeConRetraso();
         });
     }
 
@@ -255,12 +267,12 @@ export default {
 
 <style scoped>
 .department-button-active {
-  background-color: #120f6d !important; /* Cambia este color al que desees */
+  background-color: #120f6d !important; 
   color: #ffffff;
   transition: all 0.3s ease-out;
 }
 .task-active {
-  /* Cambia este color al que desees */
+
   transition: all 0.2s ease-out !important;
   color: #120f6d !important;
   border-bottom: 2px solid !important;

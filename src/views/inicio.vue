@@ -342,6 +342,7 @@ export default {
                 margin-right: 10px;
                 transition: width 0.3s ease-out;
                 border-radius:34px;
+                box-shadow: 0px 2px 2.5px 0px rgba(0, 0, 0, 0.20);
                 }
 
                 .texto-barras{
