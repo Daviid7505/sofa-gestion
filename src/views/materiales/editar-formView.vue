@@ -1,5 +1,6 @@
 <template>
-  <div class="d-flex container">
+   <div><h1>Actualizar datos del proveedor</h1></div>
+   <div class="d-flex container" id="form-target">
     <form class="d-flex flex-column" @submit.prevent="enviarFormulario">
       <div class="form-row ">
         <div class="d-flex flex-row">
@@ -242,5 +243,10 @@ padding:10px;
   justify-content:space-between;
 }
 
+h1{
+  text-align: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin-top: 30px;
+}
 
 </style>

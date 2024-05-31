@@ -125,7 +125,7 @@
         perfilIdInput: null,
         nombrePerfil:null,
         esatdoInicial: null,
-        estados:['1', '0']
+        estados:['Activo', 'Inactivo']
       };
     },
     created() {
@@ -138,7 +138,7 @@
           const response = await fetch(`http://localhost:8088/empleado/uno/${this.empleado.idEmpleado}`);
           if (response.ok) {
             const data = await response.json();
-            this.material = data;
+            this.empleado = data;
             this.obtenerDepartamentos(); // Llama a obtenerDepartamentos después de obtenerEmpleado
             this.nombreDepartamento = this.empleado.departamento ? this.empleado.departamento.nombre : null; // Asigna el nombre del departamento asociado al empleado
             this.obtenerPerfiles(); // Llama a obtenerPerfiles después de obtenerEmpleado

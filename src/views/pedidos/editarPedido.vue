@@ -23,8 +23,8 @@
             <div class="d-flex flex-row mt-3">
               <div>
                 <label class="ref-empleado">Vendedor</label>
-                <select class="form-select" v-model="pedido.idEmpleado" required>
-                  <option v-for="empleado in empleados" :key="empleado.idEmpleado" :value="empleado.idEmpleado" :selected="pedido.nombreEmpleado">{{ empleado.nombre + ' ' + empleado.apellidos }}</option>
+                <select class="form-select" v-model="pedido.vendedor" required>
+                  <option v-for="empleado in empleados" :key="empleado.idEmpleado" :value="empleado.vendedor" :selected="pedido.nombreEmpleado">{{ empleado.nombre + ' ' + empleado.apellidos }}</option>
                 </select>
               </div>
               <div class="separador-lateral"></div>
@@ -68,7 +68,7 @@
     methods: {
       async obtenerPedido() {
         try {
-          const response = await fetch(`http://localhost:8088/pedido/uno-front/${this.pedido.idPedido}`);
+          const response = await fetch(`http://localhost:8088/pedido/uno/${this.pedido.idPedido}`);
           if (response.ok){
             const data = await response.json();
               this.pedido = {
