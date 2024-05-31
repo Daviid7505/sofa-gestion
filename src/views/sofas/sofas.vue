@@ -10,7 +10,12 @@
         <router-link to="/crear-sofa" style="text-decoration: none;"><addbutton/></router-link>
       </div>
     </div>
-
+ <!-- Barra de búsqueda -->
+    <div class="row mb-3 container-barra-busqueda">
+      <div class="col-md-12 container-barra-busqueda-interno" >
+        <input type="text" v-model="searchQuery" class="form-control" placeholder="Buscar...">
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-12">
         <table class="table table-hover table-responsive">
@@ -25,7 +30,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="sofa in sofas" :key="sofa.idSofa">
+            <tr v-for="sofa in filteredSofas" :key="sofa.idSofa">
               <td>{{ sofa.nombre }}</td>
               <td>{{ sofa.descripcion }}</td>
               <td>{{ sofa.patas }}</td>
@@ -33,9 +38,9 @@
               <td>{{ sofa.precio }}</td>
               <td class="botones">
                 <div class="d-flex flex-row">
-                  <router-link :to="'/editar-sofa/' + sofa.idSofa"><editbutton/></router-link>
+                  <router-link :to="'/editar-sofa/' + sofa.idSofa"><editbutton /></router-link>
                   <div class="separador"></div>
-                  <router-link :to="'/materiales-sofa/' + sofa.idSofa"><materialbutton/></router-link>
+                  <router-link :to="'/materiales-sofa/' + sofa.idSofa" style="text-decoration:none"><materialbutton /></router-link>
                   <div class="separador"></div>
                   <trashbutton @click="eliminarSofa(sofa.idSofa)"></trashbutton>
                 </div>
@@ -49,28 +54,27 @@
 </template>
 
 <script>
+import { ref, computed, onMounted } from 'vue';
 import materialbutton from '@/components/materialbutton.vue';
 import addbutton from '@/components/addbutton.vue';
-import editbutton from '../../components/editbutton.vue';
+import editbutton from '@/components/editbutton.vue';
 import trashbutton from '@/components/trashbutton.vue';
 import notification from '@/components/notification.vue';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
 import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery, limpiarMensaje, ocultarMensajeConRetraso } from '@/js/notificacion.js';
 
 export default {
   components: { addbutton, editbutton, trashbutton, notification, materialbutton },
-  name:'versofas',
+  name: 'versofas',
   setup() {
-    let sofas = ref([]);
+    const sofas = ref([]);
+    const searchQuery = ref('');
 
     const eliminarSofa = (idSofa) => {
-      if (confirm('¿Estás seguro de que deseas eliminar este modelo de sofa?')) {
+      if (confirm('¿Estás seguro de que deseas eliminar este modelo de sofá?')) {
         fetch(`http://localhost:8088/sofa/borrar/${idSofa}`, {
           method: 'DELETE',
         })
         .then(() => {
-          // Si la eliminación fue exitosa, actualizamos la lista de sofas
           getSofas();
           mostrarMensaje('Sofá eliminado exitosamente', 'error');
           ocultarMensajeConRetraso();
@@ -83,7 +87,7 @@ export default {
       }
     };
 
-    const getSofas= () => {
+    const getSofas = () => {
       fetch('http://localhost:8088/sofa/todos')
         .then(res => res.json())
         .then(data => {
@@ -92,19 +96,48 @@ export default {
         .catch(error => {
           mostrarMensaje('Error al obtener la lista de sofás', 'error');
           ocultarMensajeConRetraso();
-          console.error('Error:', error)
+          console.error('Error:', error);
         });
     };
+
+    const filteredSofas = computed(() => {
+      return sofas.value.filter(sofa => {
+        const searchTerm = searchQuery.value.toLowerCase();
+        const nombre = sofa.nombre.toLowerCase();
+        const descripcion = sofa.descripcion.toLowerCase();
+        const patas = sofa.patas.toString();
+        const medidaCojin = sofa.medidaCojin.toString();
+        const precio = sofa.precio.toString();
+
+        return (
+          nombre.includes(searchTerm) ||
+          descripcion.includes(searchTerm) ||
+          patas.includes(searchTerm) ||
+          medidaCojin.includes(searchTerm) ||
+          precio.includes(searchTerm)
+        );
+      });
+    });
 
     onMounted(() => {
       limpiarMensaje();
       getSofas();
-      verificarMensajeQuery(); // Verifica si se ha enviado la query "mensaje" al cargar la página
+      verificarMensajeQuery();
     });
 
-    return { sofas, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, eliminarSofa, notification};
+    return { 
+      sofas, 
+      searchQuery, 
+      filteredSofas, 
+      mensajeVisible, 
+      mensaje, 
+      mensajeSatisfactorio, 
+      mensajeError, 
+      mostrarMensaje, 
+      eliminarSofa, 
+      notification 
+    };
   }
 };
-
 </script>
 

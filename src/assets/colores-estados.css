@@ -12,28 +12,41 @@
   height:30px;
   display:flex;
   transition: all 0.3s ease-out;
+  cursor:pointer;
 }
 
 .sin-asignar {
-    background-color: #6f6f6f78; /* Gris claro */
+    background-color: #ff6363a0; 
   }
+    .sin-asignar:hover{
+      background-color: #a13838a0;
+    }
   
   .cancelado {
-    background-color: #ff4f4f; /* Rojo claro */
+    background-color: #00000067; 
+  }
+  .cancelado:hover {
+    background-color: #00000099; 
   }
   
   .pendiente {
-    background-color: #c459f978; /* Amarillo claro */
+    background-color: #e8be18a3; 
     
   }
     .pendiente:hover{
-      background-color: #5c2b7478;
+      background-color: #c09d10a3;
     }
   
   .procesando {
-    background-color: #ffda53; /* Azul claro */
+    background-color: rgba(0, 151, 197, 0.371);
   }
+    .procesando:hover{
+      background-color: rgba(0, 89, 116, 0.371);
+    }
   
   .finalizado {
-    background-color: #0d8e2b; /* Verde claro */
+    background-color: rgba(15, 164, 1, 0.368); 
+  }
+  .finalizado:hover{
+    background-color: rgba(8, 98, 0, 0.368); 
   }

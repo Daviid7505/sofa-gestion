@@ -14,8 +14,8 @@
       </div>
     </div>
     <!-- Barra de búsqueda -->
-    <div class="row mb-3">
-      <div class="col-md-12">
+    <div class="row mb-3 container-barra-busqueda">
+      <div class="col-md-12 container-barra-busqueda-interno" >
         <input type="text" v-model="searchQuery" class="form-control" placeholder="Buscar...">
       </div>
     </div>
@@ -44,7 +44,7 @@
                 <div class="d-flex flex-row">
                   <router-link :to="'/editar-pedido/' + pedido.idPedido"><editbutton/></router-link>
                   <div class="separador"></div>
-                  <router-link :to="'/ver-detallepedido/' + pedido.idPedido"><detailbutton/></router-link>
+                  <router-link :to="'/ver-detallepedido/' + pedido.idPedido" style="outline:none; text-decoration:none;"><detailbutton/></router-link>
                   <div class="separador"></div>
                   <trashbutton @click="eliminarPedido(pedido.idPedido)"></trashbutton>
                 </div>
@@ -74,9 +74,7 @@ export default {
   setup() {
     const pedidos = ref([]);
     const searchQuery = ref('');
-
-
-
+    const estadoFiltro = ref('');
     const getEstadoPedido = async (idPedido) => {
   try {
     const response = await fetch(`http://localhost:8088/tarea/estadoPorPedido/${idPedido}`);
@@ -104,7 +102,7 @@ export default {
           const estado = await getEstadoPedido(pedido.idPedido);
           return { //Dentro del pedido creamos el campo estado, ya que el objeto en java no lo tiene
             ...pedido,
-            estado: estado || 'Sin productos' //Si el estado está vacío nos devuelve Sin estado
+            estado: estado || 'Sin productos' //Si el estado está vacío nos devuelve Sin productos
           };
         })
       );
@@ -134,10 +132,6 @@ export default {
       }
     };
 
-
-
-    
-
     const formatFecha = (fecha) => {
       return format(new Date(fecha), 'dd-MM-yyyy');
     };
@@ -146,11 +140,20 @@ export default {
       return pedidos.value.filter(pedido => {
         const searchTerm = searchQuery.value.toLowerCase();
         const cliente = pedido.cliente ? (pedido.cliente.nombre + ' ' + pedido.cliente.apellidos).toLowerCase() : '';
-       // const estado = pedido.estado ? pedido.estado.nombre.toLowerCase() : '';
+        const estado = pedido.estado ? pedido.estado.toLowerCase() : '';
         const fecha = formatFecha(pedido.fecha).toLowerCase();
         const vendedor = pedido.vendedor ? (pedido.vendedor.nombre + ' ' + pedido.vendedor.apellidos).toLowerCase() : '';
         const numPedido = pedido.idPedido ? pedido.idPedido.toString() : '';
-        return cliente.includes(searchTerm) || vendedor.includes(searchTerm) || numPedido.includes(searchTerm);
+     // Filtrar por estado y búsqueda
+     const matchEstado = !estadoFiltro.value || estado === estadoFiltro.value.toLowerCase();
+        const matchSearch =
+          cliente.includes(searchTerm) ||
+          vendedor.includes(searchTerm) ||
+          numPedido.includes(searchTerm) ||
+          estado.includes(searchTerm) ||
+          fecha.includes(searchTerm);
+
+        return matchEstado && matchSearch;
       });
     });
 
@@ -160,7 +163,7 @@ export default {
       verificarMensajeQuery();
     });
 
-    return { notification, pedidos, searchQuery, filteredPedidos, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, formatFecha, eliminarPedido, estadoClass};
+    return { estadoFiltro, notification, pedidos, searchQuery, filteredPedidos, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, formatFecha, eliminarPedido, estadoClass};
   }
 };
 </script>

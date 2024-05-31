@@ -12,10 +12,11 @@
         <router-link to="/crear-proveedor" style="text-decoration: none;"><addbutton/></router-link>
       </div>
     </div>
-
-    <div class="container-busqueda">
-      <input v-model="terminoBusqueda" @keyup.enter="buscar" placeholder="Ingresar id del proveedor...">
-      <button @click="buscar" class="buscar">Buscar</button>
+    <!-- Barra de búsqueda -->
+    <div class="row mb-3 container-barra-busqueda">
+      <div class="col-md-12 container-barra-busqueda-interno" >
+        <input type="text" v-model="searchQuery" class="form-control" placeholder="Buscar...">
+      </div>
     </div>
 
     <div class="row">
@@ -30,7 +31,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="proveedor in proveedores" :key="proveedor.idProveedor">
+            <tr v-for="proveedor in filteredProveedores" :key="proveedor.idProveedor">
               <td>{{ proveedor.nombre }}</td>
               <td>{{ proveedor.telefono }}</td>
               <td>{{ proveedor.descripcion }}</td>
@@ -50,44 +51,27 @@
   </div>
 </template>
 
-  <script>
-  import addbutton from '@/components/addbutton.vue';
-  import editbutton from '@/components/editbutton.vue';
-  import trashbutton from '@/components/trashbutton.vue';
-  import notification from '@/components/notification';
-  import { ref } from 'vue';
-  import { onMounted } from 'vue';
+<script>
+import addbutton from '@/components/addbutton.vue';
+import editbutton from '@/components/editbutton.vue';
+import trashbutton from '@/components/trashbutton.vue';
+import notification from '@/components/notification';
+import { ref, computed, onMounted } from 'vue';
+import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery, limpiarMensaje, ocultarMensajeConRetraso } from '@/js/notificacion.js';
 
-  // Importa la función verificarMensajeQuery desde el archivo vistaHelper.js
-  import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery, limpiarMensaje, ocultarMensajeConRetraso  } from '@/js/notificacion.js'; 
-  
-  export default {
-    components: { addbutton, editbutton, trashbutton, notification},
-    name:'verproveedores',
-    setup() {
-      let proveedores = ref([]);
-      const terminoBusqueda = ref('');
+export default {
+  components: { addbutton, editbutton, trashbutton, notification },
+  name: 'verproveedores',
+  setup() {
+    const proveedores = ref([]);
+    const searchQuery = ref('');
 
-const buscar = () => {
-  const url = `http://localhost:8088/proveedor/uno/${terminoBusqueda.value}`;
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      proveedores.value = [data];
-    })
-    .catch(error => {
-      mensaje.value = 'Error al buscar el proveedor.';
-      mostrarMensaje();
-      console.error('Error:', error);
-    });
-};
-  const eliminarProveedor = (idProveedor) => {
+    const eliminarProveedor = (idProveedor) => {
       if (confirm('¿Estás seguro de que deseas eliminar este proveedor?')) {
         fetch(`http://localhost:8088/proveedor/eliminar/${idProveedor}`, {
           method: 'DELETE',
         })
         .then(() => {
-      
           getProveedores();
           mostrarMensaje('Proveedor eliminado exitosamente', 'satisfactorio');
           ocultarMensajeConRetraso();
@@ -99,32 +83,44 @@ const buscar = () => {
         });
       }
     };
-      const getProveedores = () => {
-        fetch('http://localhost:8088/proveedor/todos')
-          .then(res => res.json())
-          .then(data => {
-            proveedores.value = data;
-          })
-          .catch (error => {
-            mostrarMensaje('Error al eliminar proveedor', 'error');
-            ocultarMensajeConRetraso();
-            console.error('Error:', error)
-          })
-      };
-  
-  
-      onMounted(() => {
-        limpiarMensaje();
-        getProveedores();
-        verificarMensajeQuery(); // Verifica si se ha enviado la query "mensaje" al cargar la página
-      });
 
-      
-  
-      return { notification, proveedores, terminoBusqueda, buscar, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, eliminarProveedor };
-    }
-  };
-  
-  </script>
+    const getProveedores = () => {
+      fetch('http://localhost:8088/proveedor/todos')
+        .then(res => res.json())
+        .then(data => {
+          proveedores.value = data;
+        })
+        .catch (error => {
+          mostrarMensaje('Error al eliminar proveedor', 'error');
+          ocultarMensajeConRetraso();
+          console.error('Error:', error);
+        });
+    };
+
+    const filteredProveedores = computed(() => {
+      return proveedores.value.filter(proveedor => {
+        const searchTerm = searchQuery.value.toLowerCase();
+        const nombre = proveedor.nombre.toLowerCase();
+        const telefono = proveedor.telefono.toString();
+        const descripcion = proveedor.descripcion.toLowerCase();
+        
+        return (
+          nombre.includes(searchTerm) ||
+          telefono.includes(searchTerm) ||
+          descripcion.includes(searchTerm)
+        );
+      });
+    });
+
+    onMounted(() => {
+      limpiarMensaje();
+      getProveedores();
+      verificarMensajeQuery();
+    });
+
+    return { notification, proveedores, filteredProveedores, searchQuery, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, eliminarProveedor };
+  }
+};
+</script>
   
  

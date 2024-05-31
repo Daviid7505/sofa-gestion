@@ -25,14 +25,15 @@ import asignarMaterial from '@/views/sofa-materiales/asignarmateriales.vue'
 import editarSofaMaterial from '@/views/sofa-materiales/editarSofaMaterial.vue'
 import departamentos from '@/views/departamentos/departamentos.vue'
 import asignarTareaEmpleado from '@/views/tareas/asignarTareaEmpleado.vue'
+import inicio from '@/views/inicio.vue'
 
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
   {
-    path:'/',
+    path:'/inicio',
     name:'inicio',
-    
+    component:inicio
   },
       {
         path: '/vermateriales',

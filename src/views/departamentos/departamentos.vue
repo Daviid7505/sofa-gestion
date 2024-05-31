@@ -89,7 +89,7 @@
     </div>
   </template>
 <script>
-import { useRoute } from 'vue-router';
+
 import { format } from 'date-fns';
 import addbutton from '@/components/addbutton.vue';
 import trashbutton from '@/components/trashbutton.vue';
@@ -99,9 +99,6 @@ import procesingbutton from '@/components/procesingbutton.vue';
 import unbindbutton from '@/components/unbindbutton.vue';
 import adduserbutton from '@/components/adduserbutton.vue';
 import cancelbutton from '@/components/cancelbutton.vue';
-
-import { ref } from 'vue';
-import { onMounted } from 'vue';
 import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery, limpiarMensaje, ocultarMensajeConRetraso } from '@/js/notificacion.js';
 
 export default {
@@ -158,8 +155,7 @@ export default {
     fetchTasks(idDepartamento) {
       fetch(`http://localhost:8088/tarea/departamento-por-estado/${idDepartamento}`)
         .then(response => response.json())
-        .then(data => {
-          console.log('Data fetched:', data);
+        .then(data => {   
           this.tasks = data;
           this.updateTaskCounts(data);
           this.filterTasksByState(this.activeState); // Aplicar el filtro de estado al cambiar de departamento
@@ -196,7 +192,6 @@ export default {
       })
         .then(response => response.json())
         .then(data => {
-            console.log('Task updated:', data); // Agregar esta línea
           this.tasks = data;
           this.updateTaskCounts(data);
           this.filteredTasks = this.tasks.filter(task => task.estado.nombre === 'Sin asignar'); // Optional: Update filteredTasks to show tasks with the 'Sin asignar' state

@@ -13,7 +13,12 @@
         <router-link to="/crear-material" style="text-decoration:none;"> <addbutton/></router-link>
       </div>
   </div>
-
+  <!-- Barra de búsqueda -->
+    <div class="row mb-3 container-barra-busqueda">
+      <div class="col-md-12 container-barra-busqueda-interno" >
+        <input type="text" v-model="searchQuery" class="form-control" placeholder="Buscar...">
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-12">
         <table class="table table-hover table-responsive">
@@ -32,7 +37,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="material in materiales" :key="material.idMaterial">
+            <tr v-for="material in filteredMateriales" :key="material.idMaterial">
               <td>{{ material.idMaterial }}</td>
               <td>{{ material.nombre }}</td>
               <td>{{ material.descripcion }}</td>
@@ -63,15 +68,14 @@ import addbutton from '@/components/addbutton.vue';
 import editbutton from '@/components/editbutton.vue';
 import trashbutton from '@/components/trashbutton.vue';
 import notification from '@/components/notification.vue';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery, limpiarMensaje, ocultarMensajeConRetraso } from '@/js/notificacion.js'; 
 
 export default {
   components: { addbutton, editbutton, trashbutton, notification},
   setup() {
     let materiales = ref([]);
-
+    const searchQuery=ref('');
     const getMateriales = () => {
       fetch('http://localhost:8088/materiales/todos')
         .then(res => res.json())
@@ -81,12 +85,7 @@ export default {
         });
     };
 
-    onMounted(() => {
-      limpiarMensaje();
-      getMateriales();
-      verificarMensajeQuery(); // Verifica si se ha enviado la query "mensaje" al cargar la página
-    });
-
+   
     const eliminarMaterial = (idMaterial) => {
       if (confirm('¿Estás seguro de que deseas eliminar este material?')) {
         fetch(`http://localhost:8088/materiales/eliminar/${idMaterial}`, {
@@ -105,6 +104,29 @@ export default {
         });
       }
     };
+    const filteredMateriales = computed(() => {
+      const searchTerm = searchQuery.value.toLowerCase();
+      return materiales.value.filter(material => {
+        const nombre = material.nombre.toLowerCase();
+        const descripcion = material.descripcion.toLowerCase();
+        const refMaterialProveedor = material.refMaterialProveedor.toString();
+        const cantidad = material.cantidad.toString();
+        const categoria = material.categoria.toLowerCase();
+        const nombreProveedor = material.proveedor ? material.proveedor.nombre.toLowerCase() : '';
+        const unidadMedida = material.unidadMedida.toLowerCase();
+
+        return (
+          nombre.includes(searchTerm) ||
+          descripcion.includes(searchTerm) ||
+          refMaterialProveedor.includes(searchTerm)||
+          cantidad.includes(searchTerm) ||
+          categoria.includes(searchTerm)||
+          nombreProveedor.includes(searchTerm)||
+          unidadMedida.includes(searchTerm)
+        );
+      });
+    });
+
     const getMaterial = () => {
       fetch('http://localhost:8088/materiales/todos')
         .then(res => res.json())
@@ -117,9 +139,14 @@ export default {
           console.error('Error:', error);
         });
     };
+    onMounted(() => {
+      limpiarMensaje();
+      getMateriales();
+      verificarMensajeQuery(); 
+    });
 
 
-    return {getMaterial, eliminarMaterial, materiales, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, notification};
+    return {searchQuery, filteredMateriales, getMaterial, eliminarMaterial, materiales, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, notification};
   }
 };
 

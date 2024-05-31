@@ -3,8 +3,6 @@
     <div class="container">
    <!-- Mensajes de notificación -->
    <notification :mensaje="mensaje" :mensajeVisible="mensajeVisible" :mensajeError="mensajeError" :mensajeSatisfactorio="mensajeSatisfactorio"/>
-
-
       <div class="container-title">
         <div class="title">
           <h1 class="text-left">Lista de clientes</h1>
@@ -13,9 +11,11 @@
           <router-link to="/crear-cliente" style="text-decoration:none;"> <addbutton/></router-link>
         </div>
       </div>
-    <div class="container-busqueda">
-      <input v-model="terminoBusqueda" v-on:keyup.enter="buscar" placeholder="Ingresar id de cliente...">
-      <button @click="buscar" class="buscar">Buscar</button>
+    <!-- Barra de búsqueda -->
+    <div class="row mb-3 container-barra-busqueda">
+      <div class="col-md-12 container-barra-busqueda-interno" >
+        <input type="text" v-model="searchQuery" class="form-control" placeholder="Buscar...">
+      </div>
     </div>
       <div class="row">
         <div class="col-md-12">
@@ -31,7 +31,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="cliente in clientes" :key="cliente.idCliente">
+              <tr v-for="cliente in filteredClientes" :key="cliente.idCliente">
                 <td>{{ cliente.nombre }}</td>
                 <td>{{ cliente.apellidos }}</td>
                 <td>{{ cliente.direccion }}</td>
@@ -52,35 +52,22 @@
     </div>
   </template>
 
-  <script>
-  import addbutton from '@/components/addbutton.vue';
-  import editbutton from '../../components/editbutton.vue';
-  import trashbutton from '@/components/trashbutton.vue';
-  import notification from '@/components/notification.vue';
-  import { ref, onMounted } from 'vue';
-  import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery, limpiarMensaje, ocultarMensajeConRetraso } from '@/js/notificacion.js';
+<script>
+import addbutton from '@/components/addbutton.vue';
+import editbutton from '../../components/editbutton.vue';
+import trashbutton from '@/components/trashbutton.vue';
+import notification from '@/components/notification.vue';
+import { ref, onMounted, computed } from 'vue';
+import { mostrarMensaje, mensaje, mensajeVisible, mensajeSatisfactorio, mensajeError, verificarMensajeQuery, limpiarMensaje, ocultarMensajeConRetraso } from '@/js/notificacion.js';
 
-  export default {
-    components: { addbutton, editbutton, trashbutton, notification },
-    name: 'verclientes',
-    setup() {
-      const clientes = ref([]);
-      const terminoBusqueda = ref('');
+export default {
+  components: { addbutton, editbutton, trashbutton, notification },
+  name: 'verclientes',
+  setup() {
+    const clientes = ref([]);
+    const searchQuery = ref('');
 
-      const buscar = () => {
-        const url = `http://localhost:8088/cliente/uno/${terminoBusqueda.value}`;
-        fetch(url)
-          .then(res => res.json())
-          .then(data => {
-            clientes.value = [data];
-          })
-          .catch(error => {
-            mensaje.value = 'Error al buscar el cliente.';
-            mostrarMensaje();
-            console.error('Error:', error);
-          });
-      };
-      const eliminarCliente = (idCliente) => {
+    const eliminarCliente = (idCliente) => {
       if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
         fetch(`http://localhost:8088/cliente/eliminar/${idCliente}`, {
           method: 'DELETE',
@@ -99,30 +86,43 @@
       }
     };
 
-      const getClientes = () => {
-        fetch('http://localhost:8088/cliente/todos')
-          .then(res => res.json())
-          .then(data => {
-            clientes.value = data;
-            console.log(data);
-          })
-          .catch(error => {
-            mostrarMensaje('Error al obtener la lista de clientes', 'error');
-            ocultarMensajeConRetraso();
-            console.error('Error:', error);
-          });
-      };
+    const getClientes = () => {
+      fetch('http://localhost:8088/cliente/todos')
+        .then(res => res.json())
+        .then(data => {
+          clientes.value = data;
+        })
+        .catch(error => {
+          mostrarMensaje('Error al obtener la lista de clientes', 'error');
+          ocultarMensajeConRetraso();
+          console.error('Error:', error);
+        });
+    };
 
-      onMounted(() => {
-        limpiarMensaje();
-        getClientes();
-        verificarMensajeQuery();
+    const filteredClientes = computed(() => {
+      return clientes.value.filter(cliente => {
+        const searchTerm = searchQuery.value.toLowerCase();
+        const nombre = cliente.nombre.toLowerCase();
+        const direccion = cliente.direccion.toLowerCase();
+        const email = cliente.email.toLowerCase();
+        const telefono = cliente.telefono.toString();
+
+        return(
+          nombre.includes(searchTerm) ||
+          direccion.includes(searchTerm) ||
+          email.includes(searchTerm) ||
+          telefono.includes(searchTerm) 
+        );
       });
-      return { notification, clientes, terminoBusqueda, buscar, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, eliminarCliente};
-    }
-  };
-  </script>
+    });
 
-<style scoped>
+    onMounted(() => {
+      limpiarMensaje();
+      getClientes();
+      verificarMensajeQuery();
+    });
 
-  </style>
+    return { notification, clientes, searchQuery, filteredClientes, mostrarMensaje, mensajeVisible, mensaje, mensajeSatisfactorio, mensajeError, eliminarCliente };
+  }
+};
+</script>
