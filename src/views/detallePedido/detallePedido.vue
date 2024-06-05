@@ -42,7 +42,7 @@
               <td class="estado"><div :class="estadoClass(detalle.estado)">{{ detalle.estado }} </div></td>
               <td class="botones">
                 <div class="d-flex flex-row">
-                  <router-link :to="'/editar-material/'"> <editbutton/></router-link>
+                 <router-link :to="'/editar-detalle/' + detalle.idDePed"> <editbutton/></router-link>
                   <div class="separador"></div>
                   <trashbutton @click="eliminarDetalle(detalle.idDePed)"> </trashbutton>
                 </div>

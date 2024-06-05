@@ -74,7 +74,7 @@
             <div class="separador-lateral"></div>
           </div>
            <div class="d-flex flex-row mt-3 botones">
-          <router-link to="/crear-detallepedido'" style="text-decoration: none;"> <cancelbutton/></router-link>
+          <router-link to="/verpedidos" style="text-decoration: none;"> <cancelbutton/></router-link>
           <confirmbutton @click="enviarFormulario"></confirmbutton>
          </div>
         </div>

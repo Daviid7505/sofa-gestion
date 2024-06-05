@@ -116,7 +116,7 @@ export default {
 
     const eliminarPedido = (idPedido) => {
       if (confirm('¿Estás seguro de que deseas eliminar este pedido?')) {
-        fetch(`http://localhost:8088/pedido/eliminar/${idPedido}`, {
+        fetch(`http://localhost:8088/pedido/eliminarcompleto/${idPedido}`, {
           method: 'DELETE',
         })
           .then(() => {

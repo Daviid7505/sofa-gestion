@@ -21,7 +21,7 @@
          <div class="d-flex flex-row">
            <div>
              <label for="validationDefault01">Descripción</label>
-             <input type="number" class="form-control" v-model="proveedor.descripcion" placeholder="Cantidad" required>
+             <input type="number" class="form-control" v-model="proveedor.descripcion" placeholder="Descripción" required>
            </div>  
          </div>
         <div class="d-flex flex-row mt-3 botones">

@@ -79,7 +79,7 @@
 
         if (response.ok) {
           
-          this.$router.push({path:'/departamentos', query: { mensaje: 'Pedido agregado exitosamente', tipo:'satisfactorio'}})
+          this.$router.push({path:'/departamentos', query: { mensaje: 'Tarea asignada correctamente', tipo:'satisfactorio'}})
         } else {
           this.$router.push({path:'/departamentos', query: { mensaje: 'Error al asignar el empleado', tipo:'error'}})
         }

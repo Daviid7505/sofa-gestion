@@ -1,4 +1,3 @@
-
 <template>
   <!-- Mensajes de notificación -->
   <notification :mensaje="mensaje" :mensajeVisible="mensajeVisible" :mensajeError="mensajeError" :mensajeSatisfactorio="mensajeSatisfactorio"/>

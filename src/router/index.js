@@ -20,6 +20,7 @@ import altaEmpleado from '@/views/empleados/altaEmpleado.vue'
 import editarEmpleado from '@/views/empleados/editarEmpleado.vue'
 import verDetallePedido from '@/views/detallePedido/detallePedido.vue'
 import altaDetallePedido from '@/views/detallePedido/altaDetallePedido.vue'
+import editarDetallePedido from '@/views/detallePedido/editarDetallePedido.vue'
 import verSofaMateriales from '@/views/sofa-materiales/sofamateriales.vue'
 import asignarMaterial from '@/views/sofa-materiales/asignarmateriales.vue'
 import editarSofaMaterial from '@/views/sofa-materiales/editarSofaMaterial.vue'
@@ -135,6 +136,11 @@ const router = createRouter({
           name: 'vistaAltaDetallePedido',
           component: altaDetallePedido
         },
+        {
+          path:'/editar-detalle/:idDePed',
+          name: 'vistaEditarDetallePedido',
+          component: editarDetallePedido
+        },
       {
         path:'/materiales-sofa/:idSofa',
         name:'vistaSofaMateriales',
@@ -146,10 +152,10 @@ const router = createRouter({
           component:asignarMaterial
         },
         {
-          path:'/sofa-editar-material/:idSofaMaterial',
-          name:'vistaEditarSofaMaterial',
-          component:editarSofaMaterial
-        },
+        path:'/sofa-editar-material/:idSofaMaterial',
+         name:'vistaEditarSofaMaterial',
+        component:editarSofaMaterial
+      },
       {
         path:'/departamentos',
         name:'vistaDepartamentos',
